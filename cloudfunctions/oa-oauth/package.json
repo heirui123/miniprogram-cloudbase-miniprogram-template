@@ -1,0 +1,9 @@
+{
+  "name": "oa-oauth",
+  "version": "1.0.0",
+  "description": "公众号网页授权（OA OAuth）云函数",
+  "main": "index.js",
+  "dependencies": {
+    "wx-server-sdk": "~2.6.3"
+  }
+} 

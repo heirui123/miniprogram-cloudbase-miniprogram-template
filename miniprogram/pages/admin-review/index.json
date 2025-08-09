@@ -1,1 +1,9 @@
- 
+{
+  "navigationBarTitleText": "审核管理",
+  "enablePullDownRefresh": true,
+  "usingComponents": {
+    "empty": "/components/empty/index",
+    "loading": "/components/loading/index",
+    "modal": "/components/modal/index"
+  }
+} 

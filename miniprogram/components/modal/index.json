@@ -1,0 +1,11 @@
+{
+  "component": true,
+  "properties": {
+    "hidden": { "type": "boolean", "value": true },
+    "title": { "type": "string", "value": "" },
+    "showCancel": { "type": "boolean", "value": true }
+  },
+  "options": {
+    "multipleSlots": true
+  }
+} 

@@ -1,0 +1,12 @@
+<view class="modal-mask" wx:if="{{!hidden}}">
+  <view class="modal">
+    <view class="modal-title">{{title}}</view>
+    <view class="modal-body">
+      <slot></slot>
+    </view>
+    <view class="modal-footer">
+      <button wx:if="{{showCancel}}" bindtap="onCancel">取消</button>
+      <button class="primary" bindtap="onConfirm">确定</button>
+    </view>
+  </view>
+</view> 

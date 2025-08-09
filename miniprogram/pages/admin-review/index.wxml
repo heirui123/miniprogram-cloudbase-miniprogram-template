@@ -13,7 +13,7 @@
         <text class="desc">{{item.description}}</text>
         <view class="meta">
           <text class="price"><text class="yen">¥</text>{{item.price}}</text>
-          <text class="publisher">发布者：{{item.publisher?.nickName || '未知'}}</text>
+          <text class="publisher">发布者：{{(item.publisher && item.publisher.nickName) ? item.publisher.nickName : '未知'}}</text>
           <text class="time">{{item.createTimeText}}</text>
         </view>
       </view>
@@ -29,6 +29,6 @@
   <loading show="{{loading}}" text="加载中..."></loading>
 </view>
 
-<modal hidden="{{!showRejectModal}}" title="填写拒绝原因" show-cancel="true" bindconfirm="confirmReject" bindcancel="cancelReject">
+<modal hidden="{{!showRejectModal}}" title="填写拒绝原因" show-cancel="{{true}}" bindconfirm="confirmReject" bindcancel="cancelReject">
   <textarea class="reason-input" placeholder="请输入拒绝原因（必填）" value="{{rejectReason}}" bindinput="onRejectReasonInput"></textarea>
 </modal> 
