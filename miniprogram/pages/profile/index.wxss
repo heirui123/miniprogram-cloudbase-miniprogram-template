@@ -1,0 +1,187 @@
+/* profile/index.wxss */
+
+.container {
+  padding: 0;
+  background: var(--background-color);
+}
+
+/* 用户信息头部 */
+.user-header {
+  background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+  padding: 40rpx 30rpx;
+  color: white;
+}
+
+.user-info {
+  display: flex;
+  align-items: center;
+}
+
+.user-avatar {
+  width: 120rpx;
+  height: 120rpx;
+  border-radius: 50%;
+  border: 4rpx solid rgba(255, 255, 255, 0.3);
+  margin-right: 30rpx;
+}
+
+.user-details {
+  flex: 1;
+}
+
+.user-name {
+  font-size: 36rpx;
+  font-weight: bold;
+  margin-bottom: 15rpx;
+}
+
+.user-meta {
+  display: flex;
+  align-items: center;
+  gap: 30rpx;
+}
+
+.credit-score {
+  display: flex;
+  align-items: center;
+}
+
+.score-label {
+  font-size: 24rpx;
+  opacity: 0.8;
+}
+
+.score-value {
+  font-size: 24rpx;
+  font-weight: bold;
+  margin-left: 5rpx;
+}
+
+.member-level {
+  font-size: 22rpx;
+  background: rgba(255, 255, 255, 0.2);
+  padding: 6rpx 12rpx;
+  border-radius: 12rpx;
+}
+
+.arrow-icon {
+  width: 32rpx;
+  height: 32rpx;
+  opacity: 0.8;
+}
+
+/* 功能菜单 */
+.menu-section {
+  margin: 20rpx;
+}
+
+.menu-group {
+  background: var(--card-color);
+  border-radius: 16rpx;
+  margin-bottom: 20rpx;
+  overflow: hidden;
+}
+
+.menu-item {
+  display: flex;
+  align-items: center;
+  padding: 30rpx;
+  border-bottom: 1rpx solid var(--border-color);
+  position: relative;
+}
+
+.menu-item:last-child {
+  border-bottom: none;
+}
+
+.menu-icon-wrapper {
+  width: 60rpx;
+  height: 60rpx;
+  background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+  border-radius: 12rpx;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-right: 20rpx;
+}
+
+.menu-icon {
+  width: 32rpx;
+  height: 32rpx;
+}
+
+.menu-content {
+  flex: 1;
+}
+
+.menu-title {
+  font-size: 30rpx;
+  font-weight: bold;
+  color: var(--text-color);
+  margin-bottom: 8rpx;
+}
+
+.menu-desc {
+  font-size: 24rpx;
+  color: var(--text-light);
+}
+
+.menu-badge {
+  background: var(--primary-color);
+  color: white;
+  font-size: 20rpx;
+  padding: 4rpx 8rpx;
+  border-radius: 10rpx;
+  margin-right: 15rpx;
+  min-width: 32rpx;
+  text-align: center;
+}
+
+.member-tag {
+  background: var(--secondary-color);
+  color: white;
+  font-size: 20rpx;
+  padding: 4rpx 8rpx;
+  border-radius: 10rpx;
+  margin-right: 15rpx;
+}
+
+/* 快捷操作 */
+.quick-actions {
+  margin: 20rpx;
+  background: var(--card-color);
+  border-radius: 16rpx;
+  padding: 30rpx;
+}
+
+.quick-actions {
+  display: flex;
+  justify-content: space-around;
+}
+
+.action-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 20rpx;
+}
+
+.action-icon {
+  width: 60rpx;
+  height: 60rpx;
+  margin-bottom: 15rpx;
+}
+
+.action-text {
+  font-size: 24rpx;
+  color: var(--text-color);
+}
+
+/* 退出登录 */
+.logout-section {
+  margin: 40rpx 20rpx;
+}
+
+.logout-section .btn {
+  width: 100%;
+} 

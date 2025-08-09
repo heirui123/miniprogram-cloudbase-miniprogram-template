@@ -1,0 +1,275 @@
+/* service-detail/index.wxss */
+
+.container {
+  padding: 0;
+  background: #F8F9FA;
+}
+
+/* 服务图片轮播 */
+.service-images {
+  height: 400rpx;
+}
+
+.service-image {
+  width: 100%;
+  height: 100%;
+}
+
+/* 服务基本信息 */
+.service-info {
+  margin: 20rpx;
+}
+
+.service-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20rpx;
+}
+
+.service-title {
+  font-size: 36rpx;
+  font-weight: bold;
+  color: #2C3E50;
+  flex: 1;
+  margin-right: 20rpx;
+}
+
+.service-status {
+  padding: 8rpx 16rpx;
+  border-radius: 16rpx;
+  font-size: 24rpx;
+  font-weight: 500;
+}
+
+.status-publishing {
+  background: rgba(152, 216, 200, 0.1);
+  color: #98D8C8;
+}
+
+.status-accepted {
+  background: rgba(69, 183, 209, 0.1);
+  color: #45B7D1;
+}
+
+.status-done {
+  background: rgba(127, 140, 141, 0.1);
+  color: #7F8C8D;
+}
+
+.status-canceled {
+  background: rgba(255, 160, 122, 0.1);
+  color: #FFA07A;
+}
+
+.service-price {
+  margin-bottom: 20rpx;
+}
+
+.price-symbol {
+  font-size: 28rpx;
+  color: #FF6B6B;
+  margin-right: 4rpx;
+}
+
+.price-value {
+  font-size: 48rpx;
+  font-weight: bold;
+  color: #FF6B6B;
+}
+
+.service-desc {
+  font-size: 28rpx;
+  color: #2C3E50;
+  line-height: 1.6;
+  margin-bottom: 20rpx;
+}
+
+.service-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10rpx;
+}
+
+/* 发布者信息 */
+.publisher-info {
+  margin: 20rpx;
+}
+
+.section-title {
+  font-size: 32rpx;
+  font-weight: bold;
+  color: #2C3E50;
+  margin-bottom: 20rpx;
+}
+
+.publisher-content {
+  display: flex;
+  align-items: center;
+}
+
+.publisher-avatar {
+  width: 80rpx;
+  height: 80rpx;
+  border-radius: 50%;
+  margin-right: 20rpx;
+}
+
+.publisher-details {
+  flex: 1;
+}
+
+.publisher-name {
+  font-size: 30rpx;
+  font-weight: bold;
+  color: #2C3E50;
+  margin-bottom: 10rpx;
+}
+
+.publisher-meta {
+  display: flex;
+  align-items: center;
+  gap: 20rpx;
+}
+
+.credit-score {
+  display: flex;
+  align-items: center;
+}
+
+.score-label {
+  font-size: 24rpx;
+  color: #7F8C8D;
+}
+
+.score-value {
+  font-size: 24rpx;
+  color: #FF6B6B;
+  font-weight: bold;
+}
+
+.member-level {
+  font-size: 24rpx;
+  color: #4ECDC4;
+  background: rgba(78, 205, 196, 0.1);
+  padding: 4rpx 12rpx;
+  border-radius: 12rpx;
+}
+
+.contact-btns {
+  display: flex;
+  gap: 10rpx;
+}
+
+/* 服务详情 */
+.service-details {
+  margin: 20rpx;
+}
+
+.detail-item {
+  display: flex;
+  margin-bottom: 15rpx;
+}
+
+.detail-label {
+  font-size: 28rpx;
+  color: #7F8C8D;
+  width: 160rpx;
+  flex-shrink: 0;
+}
+
+.detail-value {
+  font-size: 28rpx;
+  color: #2C3E50;
+  flex: 1;
+}
+
+/* 评价列表 */
+.reviews-section {
+  margin: 20rpx;
+}
+
+.review-item {
+  border-bottom: 1rpx solid #E9ECEF;
+  padding-bottom: 20rpx;
+  margin-bottom: 20rpx;
+}
+
+.review-item:last-child {
+  border-bottom: none;
+  margin-bottom: 0;
+}
+
+.review-header {
+  display: flex;
+  align-items: center;
+  margin-bottom: 15rpx;
+}
+
+.reviewer-avatar {
+  width: 60rpx;
+  height: 60rpx;
+  border-radius: 50%;
+  margin-right: 15rpx;
+}
+
+.reviewer-info {
+  flex: 1;
+}
+
+.reviewer-name {
+  font-size: 26rpx;
+  font-weight: bold;
+  color: #2C3E50;
+  margin-bottom: 5rpx;
+}
+
+.review-rating {
+  display: flex;
+}
+
+.rating-stars {
+  color: #FFD700;
+  font-size: 24rpx;
+}
+
+.review-time {
+  font-size: 22rpx;
+  color: #7F8C8D;
+}
+
+.review-content {
+  font-size: 26rpx;
+  color: #2C3E50;
+  line-height: 1.5;
+  margin-bottom: 15rpx;
+}
+
+.review-images {
+  display: flex;
+  gap: 10rpx;
+}
+
+.review-image {
+  width: 120rpx;
+  height: 120rpx;
+  border-radius: 8rpx;
+}
+
+/* 操作按钮 */
+.action-buttons {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background: #FFFFFF;
+  padding: 20rpx 30rpx;
+  border-top: 1rpx solid #E9ECEF;
+  display: flex;
+  gap: 20rpx;
+  z-index: 100;
+}
+
+.action-buttons .btn {
+  flex: 1;
+} 

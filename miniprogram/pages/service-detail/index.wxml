@@ -1,0 +1,98 @@
+<view class="container">
+  <!-- 服务图片轮播 -->
+  <swiper class="service-images" indicator-dots="{{true}}" autoplay="{{false}}">
+    <swiper-item wx:for="{{service.images}}" wx:key="*this">
+      <image class="service-image" src="{{item}}" mode="aspectFill"></image>
+    </swiper-item>
+  </swiper>
+
+  <!-- 服务基本信息 -->
+  <view class="service-info card">
+          <view class="service-header">
+        <view class="service-title">{{service.title}}</view>
+        <view class="service-status status-{{service.statusClass}}">{{service.statusText}}</view>
+      </view>
+    <view class="service-price">
+      <text class="price-symbol">¥</text>
+      <text class="price-value">{{service.price}}</text>
+    </view>
+    <view class="service-desc">{{service.description}}</view>
+    <view class="service-tags">
+      <view class="tag tag-primary" wx:for="{{service.tags}}" wx:key="*this">{{item}}</view>
+    </view>
+  </view>
+
+  <!-- 发布者信息 -->
+  <view class="publisher-info card">
+    <view class="section-title">发布者信息</view>
+    <view class="publisher-content">
+      <image class="publisher-avatar" src="{{service.publisher.avatarUrl || '/images/default-avatar.png'}}" mode="aspectFill"></image>
+      <view class="publisher-details">
+        <view class="publisher-name">{{service.publisher.nickName}}</view>
+        <view class="publisher-meta">
+          <view class="credit-score">
+            <text class="score-label">信用评分：</text>
+            <text class="score-value">{{service.publisher.creditScore || 100}}</text>
+          </view>
+          <view class="member-level">{{service.publisher.memberLevel || '普通用户'}}</view>
+        </view>
+      </view>
+      <view class="contact-btns">
+        <button class="btn btn-outline btn-small" bindtap="makeCall">拨打电话</button>
+        <button class="btn btn-primary btn-small" bindtap="addWechat">添加微信</button>
+      </view>
+    </view>
+  </view>
+
+  <!-- 服务详情 -->
+  <view class="service-details card">
+    <view class="section-title">服务详情</view>
+    <view class="detail-item">
+      <text class="detail-label">服务类型：</text>
+      <text class="detail-value">{{service.category}}</text>
+    </view>
+    <view class="detail-item">
+      <text class="detail-label">服务地址：</text>
+      <text class="detail-value">{{service.location.address || '附近'}}</text>
+    </view>
+    <view class="detail-item">
+      <text class="detail-label">发布时间：</text>
+      <text class="detail-value">{{service.createTimeText}}</text>
+    </view>
+    <view class="detail-item" wx:if="{{service.contactInfo}}">
+      <text class="detail-label">联系方式：</text>
+      <text class="detail-value">{{service.contactInfo.phone || service.contactInfo.wechat}}</text>
+    </view>
+  </view>
+
+  <!-- 评价列表 -->
+  <view class="reviews-section card" wx:if="{{reviews.length > 0}}">
+    <view class="section-title">用户评价</view>
+    <view class="review-item" wx:for="{{reviews}}" wx:key="_id">
+      <view class="review-header">
+        <image class="reviewer-avatar" src="{{item.reviewer.avatarUrl || '/images/default-avatar.png'}}" mode="aspectFill"></image>
+        <view class="reviewer-info">
+          <view class="reviewer-name">{{item.reviewer.nickName}}</view>
+          <view class="review-rating">
+            <text class="rating-stars" wx:for="{{item.rating}}" wx:key="*this" wx:for-item="star">★</text>
+          </view>
+        </view>
+        <view class="review-time">{{item.createTimeText}}</view>
+      </view>
+      <view class="review-content">{{item.content}}</view>
+      <view class="review-images" wx:if="{{item.images.length > 0}}">
+        <image class="review-image" wx:for="{{item.images}}" wx:key="*this" wx:for-item="img" src="{{img}}" mode="aspectFill"></image>
+      </view>
+    </view>
+  </view>
+
+  <!-- 操作按钮 -->
+  <view class="action-buttons">
+    <button class="btn btn-outline" bindtap="shareService">分享服务</button>
+    <button class="btn btn-primary" bindtap="createOrder" wx:if="{{service.status === '发布中'}}">立即接单</button>
+    <button class="btn btn-secondary" bindtap="contactPublisher" wx:if="{{service.status === '发布中'}}">联系发布者</button>
+  </view>
+
+  <!-- 加载状态 -->
+  <loading show="{{loading}}" text="加载中..."></loading>
+</view> 

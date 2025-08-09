@@ -1,0 +1,264 @@
+/* life-service/index.wxss */
+
+.container {
+  padding: 0;
+  background: #F8F9FA;
+}
+
+/* 搜索栏 */
+.search-bar {
+  padding: 20rpx 30rpx;
+  background: #FFFFFF;
+  border-bottom: 1rpx solid #E9ECEF;
+}
+
+.search-input-wrapper {
+  display: flex;
+  align-items: center;
+  background: #F8F9FA;
+  border-radius: 24rpx;
+  padding: 0 20rpx;
+}
+
+.search-icon-text {
+  font-size: 28rpx;
+  margin-right: 15rpx;
+}
+
+.search-input {
+  flex: 1;
+  height: 60rpx;
+  font-size: 28rpx;
+  color: #2C3E50;
+}
+
+/* 筛选区域 */
+.filter-section {
+  background: #FFFFFF;
+  border-bottom: 1rpx solid #E9ECEF;
+}
+
+.category-scroll {
+  white-space: nowrap;
+}
+
+.category-list {
+  display: flex;
+  padding: 20rpx 30rpx;
+}
+
+.category-item {
+  display: inline-block;
+  padding: 12rpx 24rpx;
+  margin-right: 20rpx;
+  background: #F8F9FA;
+  border-radius: 20rpx;
+  font-size: 26rpx;
+  color: #2C3E50;
+  border: 2rpx solid transparent;
+  transition: all 0.3s ease;
+}
+
+.category-item.active {
+  background: #FF6B6B;
+  color: white;
+  border-color: #FF6B6B;
+}
+
+/* 排序区域 */
+.sort-section {
+  display: flex;
+  background: #FFFFFF;
+  border-bottom: 1rpx solid #E9ECEF;
+}
+
+.sort-item {
+  flex: 1;
+  text-align: center;
+  padding: 20rpx 0;
+  font-size: 26rpx;
+  color: #2C3E50;
+  position: relative;
+}
+
+.sort-item.active {
+  color: #FF6B6B;
+  font-weight: bold;
+}
+
+.sort-item.active::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 40rpx;
+  height: 4rpx;
+  background: #FF6B6B;
+  border-radius: 2rpx;
+}
+
+/* 服务列表 */
+.service-list {
+  padding: 20rpx 30rpx;
+}
+
+.service-item {
+  background: #FFFFFF;
+  border-radius: 16rpx;
+  margin-bottom: 20rpx;
+  overflow: hidden;
+  box-shadow: 0 2rpx 12rpx rgba(0, 0, 0, 0.08);
+}
+
+.service-image {
+  width: 100%;
+  height: 300rpx;
+}
+
+.service-info {
+  padding: 20rpx;
+}
+
+.service-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 15rpx;
+}
+
+.service-title {
+  font-size: 30rpx;
+  font-weight: bold;
+  color: #2C3E50;
+  flex: 1;
+  margin-right: 15rpx;
+}
+
+.service-status {
+  padding: 6rpx 12rpx;
+  border-radius: 12rpx;
+  font-size: 22rpx;
+  font-weight: 500;
+}
+
+.status-publishing {
+  background: rgba(152, 216, 200, 0.1);
+  color: #98D8C8;
+}
+
+.status-accepted {
+  background: rgba(69, 183, 209, 0.1);
+  color: #45B7D1;
+}
+
+.status-done {
+  background: rgba(127, 140, 141, 0.1);
+  color: #7F8C8D;
+}
+
+.status-canceled {
+  background: rgba(255, 160, 122, 0.1);
+  color: #FFA07A;
+}
+
+.service-desc {
+  font-size: 26rpx;
+  color: #7F8C8D;
+  margin-bottom: 15rpx;
+  line-height: 1.5;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+  overflow: hidden;
+}
+
+.service-meta {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 15rpx;
+}
+
+.service-price {
+  display: flex;
+  align-items: baseline;
+}
+
+.price-symbol {
+  font-size: 24rpx;
+  color: #FF6B6B;
+  margin-right: 2rpx;
+}
+
+.price-value {
+  font-size: 32rpx;
+  font-weight: bold;
+  color: #FF6B6B;
+}
+
+.service-location {
+  display: flex;
+  align-items: center;
+  font-size: 24rpx;
+  color: #7F8C8D;
+}
+
+.location-icon-text {
+  margin-right: 8rpx;
+}
+
+.service-footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-top: 15rpx;
+  border-top: 1rpx solid #E9ECEF;
+}
+
+.publisher-info {
+  display: flex;
+  align-items: center;
+}
+
+.publisher-avatar {
+  width: 40rpx;
+  height: 40rpx;
+  border-radius: 50%;
+  margin-right: 10rpx;
+}
+
+.publisher-name {
+  font-size: 24rpx;
+  color: #2C3E50;
+}
+
+.service-time {
+  font-size: 22rpx;
+  color: #7F8C8D;
+}
+
+/* 发布按钮 */
+.publish-btn {
+  position: fixed;
+  right: 30rpx;
+  bottom: 120rpx;
+  display: flex;
+  align-items: center;
+  background: #FF6B6B;
+  color: white;
+  padding: 20rpx 30rpx;
+  border-radius: 50rpx;
+  box-shadow: 0 4rpx 20rpx rgba(255, 107, 107, 0.3);
+  z-index: 100;
+}
+
+.publish-icon-text {
+  font-size: 32rpx;
+  margin-right: 10rpx;
+}
+
+.publish-btn text {
+  font-size: 28rpx;
+  font-weight: 500;
+} 

@@ -1,0 +1,115 @@
+<view class="container">
+  <!-- 评价表单 -->
+  <view class="review-form" wx:if="{{showForm}}">
+    <view class="form-header">
+      <text class="form-title">评价服务</text>
+      <text class="service-title">{{orderInfo.serviceTitle}}</text>
+    </view>
+
+    <view class="rating-section">
+      <text class="rating-label">服务评分</text>
+      <view class="rating-stars">
+        <view class="star-item {{index < rating ? 'active' : ''}}" 
+              wx:for="{{5}}" wx:key="*this" 
+              bindtap="onStarTap" data-index="{{index}}">
+          ★
+        </view>
+      </view>
+      <text class="rating-text">{{ratingText}}</text>
+    </view>
+
+    <view class="review-content">
+      <text class="content-label">评价内容</text>
+      <textarea class="review-textarea" 
+                placeholder="请分享您的服务体验..." 
+                value="{{reviewContent}}"
+                bindinput="onContentInput"
+                maxlength="500"></textarea>
+      <text class="char-count">{{reviewContent.length}}/500</text>
+    </view>
+
+    <view class="review-tags">
+      <text class="tags-label">选择标签</text>
+      <view class="tags-list">
+        <view class="tag-item {{item.selected ? 'active' : ''}}" 
+              wx:for="{{reviewTags}}" wx:key="id"
+              bindtap="onTagSelect" data-id="{{item.id}}">
+          {{item.name}}
+        </view>
+      </view>
+    </view>
+
+    <view class="form-actions">
+      <button class="btn btn-outline" bindtap="cancelReview">取消</button>
+      <button class="btn btn-primary" bindtap="submitReview" disabled="{{!canSubmit}}">提交评价</button>
+    </view>
+  </view>
+
+  <!-- 评价列表 -->
+  <view class="review-list" wx:else>
+    <view class="list-header">
+      <text class="list-title">评价列表</text>
+      <view class="filter-tabs">
+        <view class="tab-item {{filterType === 'all' ? 'active' : ''}}" 
+              bindtap="onFilterChange" data-type="all">全部</view>
+        <view class="tab-item {{filterType === 'positive' ? 'active' : ''}}" 
+              bindtap="onFilterChange" data-type="positive">好评</view>
+        <view class="tab-item {{filterType === 'neutral' ? 'active' : ''}}" 
+              bindtap="onFilterChange" data-type="neutral">中评</view>
+        <view class="tab-item {{filterType === 'negative' ? 'active' : ''}}" 
+              bindtap="onFilterChange" data-type="negative">差评</view>
+      </view>
+    </view>
+
+    <view class="review-items">
+      <view class="review-item" wx:for="{{reviewList}}" wx:key="_id">
+        <view class="review-header">
+          <view class="reviewer-info">
+            <image class="reviewer-avatar" src="{{item.reviewer.avatarUrl || '/images/default-avatar.png'}}" mode="aspectFill"></image>
+            <view class="reviewer-details">
+              <text class="reviewer-name">{{item.reviewer.nickName}}</text>
+              <view class="review-rating">
+                <view class="rating-stars">
+                  <view class="star-item {{index < item.rating ? 'active' : ''}}" 
+                        wx:for="{{5}}" wx:key="*this">
+                    ★
+                  </view>
+                </view>
+                <text class="rating-score">{{item.rating}}.0</text>
+              </view>
+            </view>
+          </view>
+          <text class="review-time">{{item.createTimeText}}</text>
+        </view>
+
+        <view class="review-content">
+          <text class="review-text">{{item.content}}</text>
+          <view class="review-tags" wx:if="{{item.tags.length > 0}}">
+            <text class="tag-item" wx:for="{{item.tags}}" wx:key="*this" wx:for-item="tag">
+              {{tag}}
+            </text>
+          </view>
+        </view>
+
+        <view class="review-footer">
+          <view class="service-info">
+            <text class="service-title">{{item.serviceTitle}}</text>
+            <text class="service-provider">服务者：{{item.provider.nickName}}</text>
+          </view>
+          <view class="review-actions">
+            <button class="btn btn-small btn-outline" bindtap="likeReview" data-id="{{item._id}}">
+              <text class="like-icon">👍</text>
+              <text class="like-count">{{item.likes || 0}}</text>
+            </button>
+          </view>
+        </view>
+      </view>
+    </view>
+
+    <!-- 空状态 -->
+    <empty wx:if="{{reviewList.length === 0 && !loading}}" text="暂无评价" image="/images/empty-review.png"></empty>
+
+    <!-- 加载状态 -->
+    <loading show="{{loading}}" text="加载中..."></loading>
+  </view>
+</view> 

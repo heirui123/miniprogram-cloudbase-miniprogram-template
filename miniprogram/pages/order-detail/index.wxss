@@ -1,0 +1,299 @@
+/* order-detail/index.wxss */
+
+.container {
+  padding: 0;
+  background: var(--background-color);
+}
+
+/* 订单状态头部 */
+.order-status-section {
+  background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+  padding: 40rpx 30rpx;
+  color: white;
+}
+
+.status-header {
+  display: flex;
+  align-items: center;
+}
+
+.status-icon {
+  width: 80rpx;
+  height: 80rpx;
+  background: rgba(255, 255, 255, 0.2);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-right: 30rpx;
+}
+
+.status-image {
+  width: 40rpx;
+  height: 40rpx;
+}
+
+.status-info {
+  flex: 1;
+}
+
+.status-title {
+  font-size: 36rpx;
+  font-weight: bold;
+  margin-bottom: 10rpx;
+}
+
+.status-desc {
+  font-size: 26rpx;
+  opacity: 0.9;
+}
+
+/* 服务信息 */
+.service-info {
+  margin: 20rpx;
+}
+
+.section-title {
+  font-size: 32rpx;
+  font-weight: bold;
+  color: var(--text-color);
+  margin-bottom: 20rpx;
+}
+
+.service-content {
+  display: flex;
+  gap: 20rpx;
+}
+
+.service-image {
+  width: 120rpx;
+  height: 120rpx;
+  border-radius: 12rpx;
+  flex-shrink: 0;
+}
+
+.service-details {
+  flex: 1;
+}
+
+.service-title {
+  font-size: 30rpx;
+  font-weight: bold;
+  color: var(--text-color);
+  margin-bottom: 10rpx;
+}
+
+.service-desc {
+  font-size: 26rpx;
+  color: var(--text-light);
+  line-height: 1.5;
+  margin-bottom: 15rpx;
+}
+
+.service-price {
+  display: flex;
+  align-items: center;
+}
+
+.price-symbol {
+  font-size: 24rpx;
+  color: var(--primary-color);
+  margin-right: 4rpx;
+}
+
+.price-value {
+  font-size: 32rpx;
+  font-weight: bold;
+  color: var(--primary-color);
+}
+
+/* 用户信息 */
+.user-info {
+  margin: 20rpx;
+}
+
+.user-content {
+  display: flex;
+  flex-direction: column;
+  gap: 20rpx;
+}
+
+.user-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.user-label {
+  font-size: 28rpx;
+  color: var(--text-light);
+  width: 120rpx;
+  flex-shrink: 0;
+}
+
+.user-detail {
+  display: flex;
+  align-items: center;
+  flex: 1;
+}
+
+.user-avatar {
+  width: 60rpx;
+  height: 60rpx;
+  border-radius: 50%;
+  margin-right: 15rpx;
+}
+
+.user-info-text {
+  flex: 1;
+}
+
+.user-name {
+  font-size: 28rpx;
+  font-weight: bold;
+  color: var(--text-color);
+  margin-bottom: 5rpx;
+}
+
+.user-meta {
+  display: flex;
+  align-items: center;
+  gap: 15rpx;
+}
+
+.credit-score {
+  font-size: 22rpx;
+  color: var(--primary-color);
+}
+
+.member-level {
+  font-size: 22rpx;
+  color: var(--secondary-color);
+  background: rgba(78, 205, 196, 0.1);
+  padding: 4rpx 8rpx;
+  border-radius: 8rpx;
+}
+
+/* 订单信息 */
+.order-info {
+  margin: 20rpx;
+}
+
+.info-list {
+  display: flex;
+  flex-direction: column;
+  gap: 15rpx;
+}
+
+.info-item {
+  display: flex;
+  align-items: center;
+}
+
+.info-label {
+  font-size: 28rpx;
+  color: var(--text-light);
+  width: 160rpx;
+  flex-shrink: 0;
+}
+
+.info-value {
+  font-size: 28rpx;
+  color: var(--text-color);
+  flex: 1;
+}
+
+/* 时间线 */
+.timeline-section {
+  margin: 20rpx;
+}
+
+.timeline {
+  position: relative;
+}
+
+.timeline::before {
+  content: '';
+  position: absolute;
+  left: 20rpx;
+  top: 0;
+  bottom: 0;
+  width: 2rpx;
+  background: var(--border-color);
+}
+
+.timeline-item {
+  display: flex;
+  align-items: flex-start;
+  margin-bottom: 30rpx;
+  position: relative;
+}
+
+.timeline-item:last-child {
+  margin-bottom: 0;
+}
+
+.timeline-icon {
+  width: 40rpx;
+  height: 40rpx;
+  margin-right: 20rpx;
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.timeline-dot {
+  width: 20rpx;
+  height: 20rpx;
+  border-radius: 50%;
+  background: var(--border-color);
+  border: 4rpx solid var(--card-color);
+}
+
+.timeline-dot.active {
+  background: var(--primary-color);
+  border-color: var(--primary-color);
+}
+
+.timeline-content {
+  flex: 1;
+  padding-top: 5rpx;
+}
+
+.timeline-title {
+  font-size: 28rpx;
+  font-weight: bold;
+  color: var(--text-color);
+  margin-bottom: 8rpx;
+}
+
+.timeline-desc {
+  font-size: 24rpx;
+  color: var(--text-light);
+  line-height: 1.5;
+  margin-bottom: 8rpx;
+}
+
+.timeline-time {
+  font-size: 22rpx;
+  color: var(--text-light);
+}
+
+/* 操作按钮 */
+.action-buttons {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background: var(--card-color);
+  padding: 20rpx 30rpx;
+  border-top: 1rpx solid var(--border-color);
+  display: flex;
+  gap: 20rpx;
+  z-index: 100;
+}
+
+.action-buttons .btn {
+  flex: 1;
+} 

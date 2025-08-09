@@ -1,0 +1,89 @@
+<view class="container">
+  <!-- 搜索栏 -->
+  <view class="search-section">
+    <view class="search-bar">
+      <text class="search-icon">🔍</text>
+      <input class="search-input" placeholder="搜索二手物品" value="{{searchKeyword}}" bindinput="onSearchInput" bindconfirm="onSearch"></input>
+      <button class="search-btn" bindtap="onSearch">搜索</button>
+    </view>
+  </view>
+
+  <!-- 分类筛选 -->
+  <view class="category-section">
+    <scroll-view class="category-scroll" scroll-x="{{true}}">
+      <view class="category-list">
+        <view class="category-item {{selectedCategory === item.id ? 'active' : ''}}" 
+              wx:for="{{categories}}" wx:key="id" 
+              bindtap="onCategorySelect" data-id="{{item.id}}">
+          <image class="category-icon" src="{{item.icon}}" mode="aspectFit"></image>
+          <text class="category-name">{{item.name}}</text>
+        </view>
+      </view>
+    </scroll-view>
+  </view>
+
+  <!-- 排序栏 -->
+  <view class="sort-section">
+    <view class="sort-item {{sortType === 'latest' ? 'active' : ''}}" bindtap="onSortSelect" data-type="latest">
+      <text class="sort-text">最新</text>
+    </view>
+    <view class="sort-item {{sortType === 'price' ? 'active' : ''}}" bindtap="onSortSelect" data-type="price">
+      <text class="sort-text">价格</text>
+    </view>
+    <view class="sort-item {{sortType === 'distance' ? 'active' : ''}}" bindtap="onSortSelect" data-type="distance">
+      <text class="sort-text">距离</text>
+    </view>
+  </view>
+
+  <!-- 物品列表 -->
+  <view class="item-list">
+    <view class="item-card" wx:for="{{itemList}}" wx:key="_id" bindtap="goToItemDetail" data-id="{{item._id}}">
+      <view class="item-images">
+        <swiper class="item-swiper" indicator-dots="{{true}}" autoplay="{{false}}">
+          <swiper-item wx:for="{{item.images}}" wx:key="*this" wx:for-item="img">
+            <image class="item-image" src="{{img}}" mode="aspectFill"></image>
+          </swiper-item>
+        </swiper>
+        <view class="item-status status-{{item.statusClass}}">{{item.statusText}}</view>
+      </view>
+      
+      <view class="item-info">
+        <view class="item-title">{{item.title}}</view>
+        <view class="item-desc">{{item.description}}</view>
+        <view class="item-meta">
+          <view class="item-location">
+            <text class="location-icon">📍</text>
+            <text class="location-text">{{item.location.address || '附近'}}</text>
+          </view>
+          <view class="item-time">{{item.createTimeText}}</view>
+        </view>
+        
+        <view class="item-footer">
+          <view class="item-price">
+            <text class="price-symbol">¥</text>
+            <text class="price-value">{{item.price}}</text>
+            <text class="original-price" wx:if="{{item.originalPrice}}">原价¥{{item.originalPrice}}</text>
+          </view>
+          
+          <view class="seller-info">
+            <image class="seller-avatar" src="{{item.seller.avatarUrl || '/images/default-avatar.png'}}" mode="aspectFill"></image>
+            <text class="seller-name">{{item.seller.nickName}}</text>
+            <view class="credit-score">{{item.seller.creditScore || 100}}分</view>
+          </view>
+        </view>
+      </view>
+    </view>
+  </view>
+
+  <!-- 空状态 -->
+  <empty wx:if="{{itemList.length === 0 && !loading}}" text="暂无二手物品"></empty>
+
+  <!-- 加载状态 -->
+  <loading show="{{loading}}" text="加载中..."></loading>
+
+  <!-- 发布按钮 -->
+  <view class="publish-btn" bindtap="goToPublish">
+    <text class="publish-icon">＋</text>
+    <text class="publish-text">发布物品</text>
+  </view>
+</view> 

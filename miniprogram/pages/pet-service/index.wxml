@@ -1,0 +1,107 @@
+<view class="container">
+  <!-- 搜索栏 -->
+  <view class="search-section">
+    <view class="search-bar">
+      <text class="search-icon">🔍</text>
+      <input class="search-input" placeholder="搜索宠物服务" value="{{searchKeyword}}" bindinput="onSearchInput" bindconfirm="onSearch"></input>
+      <button class="search-btn" bindtap="onSearch">搜索</button>
+    </view>
+  </view>
+
+  <!-- 服务类型筛选 -->
+  <view class="service-type-section">
+    <scroll-view class="service-type-scroll" scroll-x="{{true}}">
+      <view class="service-type-list">
+        <view class="service-type-item {{selectedServiceType === item.id ? 'active' : ''}}" 
+              wx:for="{{serviceTypes}}" wx:key="id" 
+              bindtap="onServiceTypeSelect" data-id="{{item.id}}">
+          <image class="service-type-icon" src="{{item.icon}}" mode="aspectFit"></image>
+          <text class="service-type-name">{{item.name}}</text>
+        </view>
+      </view>
+    </scroll-view>
+  </view>
+
+  <!-- 排序栏 -->
+  <view class="sort-section">
+    <view class="sort-item {{sortType === 'latest' ? 'active' : ''}}" bindtap="onSortSelect" data-type="latest">
+      <text class="sort-text">最新</text>
+    </view>
+    <view class="sort-item {{sortType === 'price' ? 'active' : ''}}" bindtap="onSortSelect" data-type="price">
+      <text class="sort-text">价格</text>
+    </view>
+    <view class="sort-item {{sortType === 'rating' ? 'active' : ''}}" bindtap="onSortSelect" data-type="rating">
+      <text class="sort-text">好评</text>
+    </view>
+    <view class="sort-item {{sortType === 'distance' ? 'active' : ''}}" bindtap="onSortSelect" data-type="distance">
+      <text class="sort-text">距离</text>
+    </view>
+  </view>
+
+  <!-- 服务列表 -->
+  <view class="service-list">
+    <view class="service-card" wx:for="{{serviceList}}" wx:key="_id" bindtap="goToServiceDetail" data-id="{{item._id}}">
+      <view class="service-header">
+        <view class="service-title">{{item.title}}</view>
+        <view class="service-status status-{{item.status}}">{{item.statusText}}</view>
+      </view>
+      
+      <view class="service-content">
+        <view class="service-images">
+          <swiper class="service-swiper" indicator-dots="{{true}}" autoplay="{{false}}">
+            <swiper-item wx:for="{{item.images}}" wx:key="*this" wx:for-item="img">
+              <image class="service-image" src="{{img}}" mode="aspectFill"></image>
+            </swiper-item>
+          </swiper>
+        </view>
+        
+        <view class="service-info">
+          <view class="service-desc">{{item.description}}</view>
+          <view class="service-meta">
+            <view class="service-location">
+                             <text class="location-icon">📍</text>
+              <text class="location-text">{{item.location.address || '附近'}}</text>
+            </view>
+            <view class="service-time">{{item.createTimeText}}</view>
+          </view>
+          
+          <view class="service-footer">
+            <view class="service-price">
+              <text class="price-symbol">¥</text>
+              <text class="price-value">{{item.price}}</text>
+              <text class="price-unit">/{{item.priceUnit || '次'}}</text>
+            </view>
+            
+            <view class="provider-info">
+              <image class="provider-avatar" src="{{item.provider.avatarUrl || '/images/default-avatar.png'}}" mode="aspectFill"></image>
+              <view class="provider-details">
+                <text class="provider-name">{{item.provider.nickName}}</text>
+                <view class="provider-rating">
+                  <text class="rating-stars" wx:for="{{item.provider.rating || 5}}" wx:key="*this">★</text>
+                  <text class="rating-score">{{item.provider.rating || 5.0}}</text>
+                </view>
+              </view>
+            </view>
+          </view>
+        </view>
+      </view>
+
+      <view class="service-actions">
+        <button class="btn btn-outline btn-small" bindtap="contactProvider" data-service="{{item}}">联系</button>
+        <button class="btn btn-primary btn-small" wx:if="{{item.status === '发布中'}}" bindtap="bookService" data-id="{{item._id}}">预约</button>
+      </view>
+    </view>
+  </view>
+
+  <!-- 空状态 -->
+  <empty wx:if="{{serviceList.length === 0 && !loading}}" text="暂无宠物服务"></empty>
+
+  <!-- 加载状态 -->
+  <loading show="{{loading}}" text="加载中..."></loading>
+
+  <!-- 发布按钮 -->
+  <view class="publish-btn" bindtap="goToPublish">
+    <text class="publish-icon">＋</text>
+    <text class="publish-text">发布服务</text>
+  </view>
+</view> 

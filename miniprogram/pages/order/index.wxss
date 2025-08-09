@@ -1,0 +1,193 @@
+/* order/index.wxss */
+
+.container {
+  padding: 0;
+  background: #F8F9FA;
+}
+
+/* 状态筛选 */
+.filter-section {
+  background: #FFFFFF;
+  padding: 20rpx 0;
+  position: sticky;
+  top: 0;
+  z-index: 10;
+}
+
+.status-scroll {
+  white-space: nowrap;
+}
+
+.status-list {
+  display: flex;
+  padding: 0 20rpx;
+}
+
+.status-item {
+  padding: 12rpx 24rpx;
+  margin-right: 20rpx;
+  border-radius: 20rpx;
+  font-size: 26rpx;
+  color: #7F8C8D;
+  background: #F8F9FA;
+  border: 1rpx solid #E9ECEF;
+  flex-shrink: 0;
+}
+
+.status-item.active {
+  background: #FF6B6B;
+  color: white;
+  border-color: #FF6B6B;
+}
+
+/* 订单列表 */
+.order-list {
+  padding: 20rpx;
+}
+
+.order-item {
+  background: #FFFFFF;
+  border-radius: 16rpx;
+  margin-bottom: 20rpx;
+  overflow: hidden;
+  box-shadow: 0 2rpx 8rpx rgba(0, 0, 0, 0.1);
+}
+
+.order-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 20rpx;
+  border-bottom: 1rpx solid #E9ECEF;
+}
+
+.order-id {
+  font-size: 24rpx;
+  color: #7F8C8D;
+}
+
+.order-status {
+  padding: 6rpx 12rpx;
+  border-radius: 12rpx;
+  font-size: 22rpx;
+  font-weight: 500;
+}
+
+.status-pending {
+  background: rgba(255, 193, 7, 0.1);
+  color: #FFC107;
+}
+
+.status-inprogress {
+  background: rgba(78, 205, 196, 0.1);
+  color: #4ECDC4;
+}
+
+.status-done {
+  background: rgba(152, 216, 200, 0.1);
+  color: #98D8C8;
+}
+
+.status-canceled {
+  background: rgba(255, 160, 122, 0.1);
+  color: #FFA07A;
+}
+
+.order-content {
+  display: flex;
+  padding: 20rpx;
+  gap: 20rpx;
+}
+
+.service-image {
+  width: 120rpx;
+  height: 120rpx;
+  border-radius: 12rpx;
+  flex-shrink: 0;
+}
+
+.order-info {
+  flex: 1;
+}
+
+.service-title {
+  font-size: 30rpx;
+  font-weight: bold;
+  color: #2C3E50;
+  margin-bottom: 10rpx;
+  line-height: 1.4;
+}
+
+.service-desc {
+  font-size: 24rpx;
+  color: #7F8C8D;
+  line-height: 1.5;
+  margin-bottom: 15rpx;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+  overflow: hidden;
+}
+
+.order-meta {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.order-price {
+  display: flex;
+  align-items: center;
+}
+
+.price-symbol {
+  font-size: 22rpx;
+  color: #FF6B6B;
+  margin-right: 2rpx;
+}
+
+.price-value {
+  font-size: 28rpx;
+  font-weight: bold;
+  color: #FF6B6B;
+}
+
+.order-time {
+  font-size: 22rpx;
+  color: #7F8C8D;
+}
+
+.order-footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 20rpx;
+  border-top: 1rpx solid #E9ECEF;
+}
+
+.user-info {
+  display: flex;
+  align-items: center;
+}
+
+.user-avatar {
+  width: 40rpx;
+  height: 40rpx;
+  border-radius: 50%;
+  margin-right: 10rpx;
+}
+
+.user-name {
+  font-size: 24rpx;
+  color: #2C3E50;
+}
+
+.order-actions {
+  display: flex;
+  gap: 10rpx;
+}
+
+.order-actions .btn {
+  font-size: 22rpx;
+  padding: 8rpx 16rpx;
+} 

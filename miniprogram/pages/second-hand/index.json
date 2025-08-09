@@ -1,0 +1,10 @@
+{
+  "navigationBarTitleText": "二手闲置",
+  "usingComponents": {
+    "loading": "/components/loading/index",
+    "empty": "/components/empty/index"
+  },
+  "enablePullDownRefresh": true,
+  "backgroundTextStyle": "dark",
+  "onReachBottomDistance": 50
+} 

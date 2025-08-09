@@ -1,0 +1,96 @@
+<view class="container">
+  <!-- 搜索栏 -->
+  <view class="search-section">
+    <view class="search-bar">
+      <text class="search-icon">🔍</text>
+      <input class="search-input" placeholder="搜索互助需求" value="{{searchKeyword}}" bindinput="onSearchInput" bindconfirm="onSearch"></input>
+      <button class="search-btn" bindtap="onSearch">搜索</button>
+    </view>
+  </view>
+
+  <!-- 互助类型筛选 -->
+  <view class="help-type-section">
+    <scroll-view class="help-type-scroll" scroll-x="{{true}}">
+      <view class="help-type-list">
+        <view class="help-type-item {{selectedHelpType === item.id ? 'active' : ''}}" 
+              wx:for="{{helpTypes}}" wx:key="id" 
+              bindtap="onHelpTypeSelect" data-id="{{item.id}}">
+          <image class="help-type-icon" src="{{item.icon}}" mode="aspectFit"></image>
+          <text class="help-type-name">{{item.name}}</text>
+        </view>
+      </view>
+    </scroll-view>
+  </view>
+
+  <!-- 排序栏 -->
+  <view class="sort-section">
+    <view class="sort-item {{sortType === 'latest' ? 'active' : ''}}" bindtap="onSortSelect" data-type="latest">
+      <text class="sort-text">最新</text>
+    </view>
+    <view class="sort-item {{sortType === 'urgent' ? 'active' : ''}}" bindtap="onSortSelect" data-type="urgent">
+      <text class="sort-text">紧急</text>
+    </view>
+    <view class="sort-item {{sortType === 'distance' ? 'active' : ''}}" bindtap="onSortSelect" data-type="distance">
+      <text class="sort-text">距离</text>
+    </view>
+    <view class="sort-item {{sortType === 'credit' ? 'active' : ''}}" bindtap="onSortSelect" data-type="credit">
+      <text class="sort-text">信用</text>
+    </view>
+  </view>
+
+  <!-- 互助列表 -->
+  <view class="help-list">
+    <view class="help-card" wx:for="{{helpList}}" wx:key="_id" bindtap="goToHelpDetail" data-id="{{item._id}}">
+      <view class="help-header">
+        <view class="help-title">{{item.title}}</view>
+        <view class="help-status status-{{item.statusClass}}">{{item.statusText}}</view>
+      </view>
+      
+      <view class="help-content">
+        <view class="help-desc">{{item.description}}</view>
+        
+        <view class="help-meta">
+          <view class="help-location">
+                         <text class="location-icon">📍</text>
+            <text class="location-text">{{item.location.address || '附近'}}</text>
+          </view>
+          <view class="help-time">{{item.createTimeText}}</view>
+        </view>
+        
+        <view class="help-footer">
+          <view class="requester-info">
+            <image class="requester-avatar" src="{{item.requester.avatarUrl || '/images/default-avatar.png'}}" mode="aspectFill"></image>
+            <view class="requester-details">
+              <text class="requester-name">{{item.requester.nickName}}</text>
+              <view class="requester-credit">
+                <text class="credit-score">信用 {{item.requester.creditScore || 100}}</text>
+                <text class="member-level">{{item.requester.memberLevel || '普通用户'}}</text>
+              </view>
+            </view>
+          </view>
+          
+          <view class="help-urgency" wx:if="{{item.urgency}}">
+            <text class="urgency-tag urgency-{{item.urgency}}">{{item.urgencyText}}</text>
+          </view>
+        </view>
+      </view>
+
+      <view class="help-actions">
+        <button class="btn btn-outline btn-small" bindtap="contactRequester" data-help="{{item}}">联系</button>
+        <button class="btn btn-primary btn-small" wx:if="{{item.status === '求助中'}}" bindtap="offerHelp" data-id="{{item._id}}">我可以帮忙</button>
+      </view>
+    </view>
+  </view>
+
+  <!-- 空状态 -->
+  <empty wx:if="{{helpList.length === 0 && !loading}}" text="暂无互助需求"></empty>
+
+  <!-- 加载状态 -->
+  <loading show="{{loading}}" text="加载中..."></loading>
+
+  <!-- 发布按钮 -->
+  <view class="publish-btn" bindtap="goToPublish">
+    <text class="publish-icon">＋</text>
+    <text class="publish-text">发布求助</text>
+  </view>
+</view> 

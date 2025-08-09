@@ -1,0 +1,88 @@
+<view class="container">
+  <!-- 搜索栏 -->
+  <view class="search-section">
+    <view class="search-bar">
+      <text class="search-icon">🔍</text>
+      <input class="search-input" placeholder="搜索跑腿任务" value="{{searchKeyword}}" bindinput="onSearchInput" bindconfirm="onSearch"></input>
+      <button class="search-btn" bindtap="onSearch">搜索</button>
+    </view>
+  </view>
+
+  <!-- 筛选栏 -->
+  <view class="filter-section">
+    <scroll-view class="filter-scroll" scroll-x="{{true}}">
+      <view class="filter-list">
+        <view class="filter-item {{selectedCategory === item.id ? 'active' : ''}}" 
+              wx:for="{{categories}}" wx:key="id" 
+              bindtap="onCategorySelect" data-id="{{item.id}}">
+          {{item.name}}
+        </view>
+      </view>
+    </scroll-view>
+  </view>
+
+  <!-- 排序栏 -->
+  <view class="sort-section">
+    <view class="sort-item {{sortType === 'latest' ? 'active' : ''}}" bindtap="onSortSelect" data-type="latest">
+      <text class="sort-text">最新</text>
+    </view>
+    <view class="sort-item {{sortType === 'price' ? 'active' : ''}}" bindtap="onSortSelect" data-type="price">
+      <text class="sort-text">价格</text>
+    </view>
+    <view class="sort-item {{sortType === 'distance' ? 'active' : ''}}" bindtap="onSortSelect" data-type="distance">
+      <text class="sort-text">距离</text>
+    </view>
+  </view>
+
+  <!-- 任务列表 -->
+  <view class="task-list">
+    <view class="task-item" wx:for="{{taskList}}" wx:key="_id" bindtap="goToTaskDetail" data-id="{{item._id}}">
+      <view class="task-header">
+        <view class="task-title">{{item.title}}</view>
+        <view class="task-status status-{{item.statusClass}}">{{item.statusText}}</view>
+      </view>
+      
+      <view class="task-content">
+        <view class="task-info">
+          <view class="task-desc">{{item.description}}</view>
+          <view class="task-meta">
+            <view class="task-location">
+                             <text class="location-icon">📍</text>
+              <text class="location-text">{{item.location.address || '附近'}}</text>
+            </view>
+            <view class="task-time">{{item.createTimeText}}</view>
+          </view>
+        </view>
+        
+        <view class="task-price">
+          <text class="price-symbol">¥</text>
+          <text class="price-value">{{item.price}}</text>
+        </view>
+      </view>
+
+      <view class="task-footer">
+        <view class="publisher-info">
+          <image class="publisher-avatar" src="{{item.publisher.avatarUrl || '/images/default-avatar.png'}}" mode="aspectFill"></image>
+          <text class="publisher-name">{{item.publisher.nickName}}</text>
+          <view class="credit-score">{{item.publisher.creditScore || 100}}分</view>
+        </view>
+        <view class="task-actions">
+          <button class="btn btn-primary btn-small" wx:if="{{item.status === '发布中'}}" bindtap="acceptTask" data-id="{{item._id}}">接单</button>
+          <button class="btn btn-outline btn-small" bindtap="contactPublisher" data-task="{{item}}">联系</button>
+        </view>
+      </view>
+    </view>
+  </view>
+
+  <!-- 空状态 -->
+  <empty wx:if="{{taskList.length === 0 && !loading}}" text="暂无跑腿任务"></empty>
+
+  <!-- 加载状态 -->
+  <loading show="{{loading}}" text="加载中..."></loading>
+
+  <!-- 发布按钮 -->
+  <view class="publish-btn" bindtap="goToPublish">
+    <text class="publish-icon">＋</text>
+    <text class="publish-text">发布任务</text>
+  </view>
+</view> 

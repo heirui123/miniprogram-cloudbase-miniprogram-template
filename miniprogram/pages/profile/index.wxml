@@ -1,0 +1,119 @@
+<view class="container">
+  <!-- 用户信息头部 -->
+  <view class="user-header">
+    <view class="user-info" bindtap="goToUserInfo">
+      <image class="user-avatar" src="{{userInfo.avatarUrl || '/images/default-avatar.png'}}" mode="aspectFill"></image>
+      <view class="user-details">
+        <view class="user-name">{{userInfo.nickName || '未登录'}}</view>
+        <view class="user-meta">
+          <view class="credit-score">
+            <text class="score-label">信用评分：</text>
+            <text class="score-value">{{userInfo.creditScore || 100}}</text>
+          </view>
+          <view class="member-level">{{userInfo.memberLevel || '普通用户'}}</view>
+        </view>
+      </view>
+      <image class="arrow-icon" src="/images/arrow-right.png" mode="aspectFit"></image>
+    </view>
+  </view>
+
+  <!-- 功能菜单 -->
+  <view class="menu-section">
+    <view class="menu-group">
+      <view class="menu-item" bindtap="goToMyServices">
+        <view class="menu-icon-wrapper">
+          <image class="menu-icon" src="/images/menu-service.png" mode="aspectFit"></image>
+        </view>
+        <view class="menu-content">
+          <text class="menu-title">我的服务</text>
+          <text class="menu-desc">管理我发布的服务</text>
+        </view>
+        <view class="menu-badge" wx:if="{{serviceCount > 0}}">{{serviceCount}}</view>
+        <image class="arrow-icon" src="/images/arrow-right.png" mode="aspectFit"></image>
+      </view>
+
+      <view class="menu-item" bindtap="goToMyOrders">
+        <view class="menu-icon-wrapper">
+          <image class="menu-icon" src="/images/menu-order.png" mode="aspectFit"></image>
+        </view>
+        <view class="menu-content">
+          <text class="menu-title">我的订单</text>
+          <text class="menu-desc">查看订单状态</text>
+        </view>
+        <view class="menu-badge" wx:if="{{orderCount > 0}}">{{orderCount}}</view>
+        <image class="arrow-icon" src="/images/arrow-right.png" mode="aspectFit"></image>
+      </view>
+
+      <view class="menu-item" bindtap="goToMemberCenter">
+        <view class="menu-icon-wrapper">
+          <image class="menu-icon" src="/images/menu-member.png" mode="aspectFit"></image>
+        </view>
+        <view class="menu-content">
+          <text class="menu-title">会员中心</text>
+          <text class="menu-desc">会员权益和升级</text>
+        </view>
+        <view class="member-tag" wx:if="{{userInfo.memberLevel !== '普通用户'}}">{{userInfo.memberLevel}}</view>
+        <image class="arrow-icon" src="/images/arrow-right.png" mode="aspectFit"></image>
+      </view>
+    </view>
+
+    <view class="menu-group">
+      <view class="menu-item" bindtap="goToSettings">
+        <view class="menu-icon-wrapper">
+          <image class="menu-icon" src="/images/menu-settings.png" mode="aspectFit"></image>
+        </view>
+        <view class="menu-content">
+          <text class="menu-title">设置</text>
+          <text class="menu-desc">账号和隐私设置</text>
+        </view>
+        <image class="arrow-icon" src="/images/arrow-right.png" mode="aspectFit"></image>
+      </view>
+
+      <view class="menu-item" bindtap="goToHelp">
+        <view class="menu-icon-wrapper">
+          <image class="menu-icon" src="/images/menu-help.png" mode="aspectFit"></image>
+        </view>
+        <view class="menu-content">
+          <text class="menu-title">帮助中心</text>
+          <text class="menu-desc">使用指南和常见问题</text>
+        </view>
+        <image class="arrow-icon" src="/images/arrow-right.png" mode="aspectFit"></image>
+      </view>
+
+      <view class="menu-item" bindtap="goToAbout">
+        <view class="menu-icon-wrapper">
+          <image class="menu-icon" src="/images/menu-about.png" mode="aspectFit"></image>
+        </view>
+        <view class="menu-content">
+          <text class="menu-title">关于我们</text>
+          <text class="menu-desc">版本信息和联系方式</text>
+        </view>
+        <image class="arrow-icon" src="/images/arrow-right.png" mode="aspectFit"></image>
+      </view>
+    </view>
+  </view>
+
+  <!-- 快捷操作 -->
+  <view class="quick-actions">
+    <view class="action-item" bindtap="goToPublish">
+      <image class="action-icon" src="/images/action-publish.png" mode="aspectFit"></image>
+      <text class="action-text">发布服务</text>
+    </view>
+    <view class="action-item" bindtap="goToScan">
+      <image class="action-icon" src="/images/action-scan.png" mode="aspectFit"></image>
+      <text class="action-text">扫码接单</text>
+    </view>
+    <view class="action-item" bindtap="goToInvite">
+      <image class="action-icon" src="/images/action-invite.png" mode="aspectFit"></image>
+      <text class="action-text">邀请好友</text>
+    </view>
+  </view>
+
+  <!-- 退出登录 -->
+  <view class="logout-section" wx:if="{{userInfo}}">
+    <button class="btn btn-outline" bindtap="logout">退出登录</button>
+  </view>
+
+  <!-- 加载状态 -->
+  <loading show="{{loading}}" text="加载中..."></loading>
+</view> 

@@ -1,0 +1,10 @@
+{
+  "navigationBarTitleText": "好邻居互助",
+  "usingComponents": {
+    "loading": "/components/loading/index",
+    "empty": "/components/empty/index"
+  },
+  "enablePullDownRefresh": true,
+  "backgroundTextStyle": "dark",
+  "onReachBottomDistance": 50
+} 

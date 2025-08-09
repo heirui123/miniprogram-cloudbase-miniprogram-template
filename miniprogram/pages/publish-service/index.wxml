@@ -1,0 +1,106 @@
+<view class="container">
+  <form bindsubmit="submitForm">
+    <!-- 服务类型选择 -->
+    <view class="form-section">
+      <view class="section-title">服务类型</view>
+      <view class="category-grid">
+        <view class="category-item {{selectedCategory === item.id ? 'active' : ''}}" 
+              wx:for="{{categories}}" wx:key="id" 
+              bindtap="selectCategory" data-id="{{item.id}}">
+          <image class="category-icon" src="{{item.icon}}" mode="aspectFit"></image>
+          <text class="category-name">{{item.name}}</text>
+        </view>
+      </view>
+    </view>
+
+    <!-- 基本信息 -->
+    <view class="form-section">
+      <view class="section-title">基本信息</view>
+      
+      <view class="form-item">
+        <text class="form-label">服务标题</text>
+        <input class="form-input" name="title" placeholder="请输入服务标题" value="{{formData.title}}" bindinput="onInputChange" data-field="title"></input>
+      </view>
+
+      <view class="form-item">
+        <text class="form-label">服务描述</text>
+        <textarea class="form-textarea" name="description" placeholder="请详细描述您的服务内容" value="{{formData.description}}" bindinput="onInputChange" data-field="description"></textarea>
+      </view>
+
+      <view class="form-item">
+        <text class="form-label">服务价格</text>
+        <view class="price-input-wrapper">
+          <text class="price-symbol">¥</text>
+          <input class="form-input price-input" name="price" type="number" placeholder="请输入价格" value="{{formData.price}}" bindinput="onInputChange" data-field="price"></input>
+        </view>
+      </view>
+    </view>
+
+    <!-- 图片上传 -->
+    <view class="form-section">
+      <view class="section-title">服务图片</view>
+      <view class="image-upload">
+        <view class="image-list">
+          <view class="image-item" wx:for="{{formData.images}}" wx:key="*this">
+            <image class="uploaded-image" src="{{item}}" mode="aspectFill"></image>
+            <view class="delete-btn" bindtap="deleteImage" data-index="{{index}}">×</view>
+          </view>
+          <view class="upload-btn" bindtap="chooseImage" wx:if="{{formData.images.length < 9}}">
+            <image class="upload-icon" src="/images/upload.png" mode="aspectFit"></image>
+            <text class="upload-text">添加图片</text>
+          </view>
+        </view>
+        <text class="upload-tip">最多上传9张图片</text>
+      </view>
+    </view>
+
+    <!-- 联系方式 -->
+    <view class="form-section">
+      <view class="section-title">联系方式</view>
+      
+      <view class="form-item">
+        <text class="form-label">联系电话</text>
+        <input class="form-input" name="phone" type="number" placeholder="请输入联系电话" value="{{formData.contactInfo.phone}}" bindinput="onContactChange" data-field="phone"></input>
+      </view>
+
+      <view class="form-item">
+        <text class="form-label">微信号</text>
+        <input class="form-input" name="wechat" placeholder="请输入微信号" value="{{formData.contactInfo.wechat}}" bindinput="onContactChange" data-field="wechat"></input>
+      </view>
+    </view>
+
+    <!-- 服务地址 -->
+    <view class="form-section">
+      <view class="section-title">服务地址</view>
+      <view class="location-selector" bindtap="chooseLocation">
+        <view class="location-info">
+          <image class="location-icon" src="/images/location.png" mode="aspectFit"></image>
+          <text class="location-text">{{formData.location.address || '点击选择服务地址'}}</text>
+        </view>
+        <image class="arrow-icon" src="/images/arrow-right.png" mode="aspectFit"></image>
+      </view>
+    </view>
+
+    <!-- 服务标签 -->
+    <view class="form-section">
+      <view class="section-title">服务标签</view>
+      <view class="tags-container">
+        <view class="tag-item {{item.selected ? 'selected' : ''}}" 
+              wx:for="{{tags}}" wx:key="id" 
+              bindtap="toggleTag" data-id="{{item.id}}">
+          {{item.name}}
+        </view>
+      </view>
+    </view>
+
+    <!-- 提交按钮 -->
+    <view class="submit-section">
+      <button class="btn btn-primary btn-large" form-type="submit" loading="{{submitting}}">
+        {{submitting ? '发布中...' : '发布服务'}}
+      </button>
+    </view>
+  </form>
+
+  <!-- 加载状态 -->
+  <loading show="{{loading}}" text="加载中..."></loading>
+</view> 

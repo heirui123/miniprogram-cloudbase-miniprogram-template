@@ -1,0 +1,78 @@
+<view class="container">
+  <!-- 搜索栏 -->
+  <view class="search-bar">
+    <view class="search-input-wrapper">
+      <text class="search-icon-text">🔍</text>
+      <input class="search-input" placeholder="搜索服务" value="{{searchKeyword}}" bindinput="onSearchInput" bindconfirm="onSearch"></input>
+    </view>
+  </view>
+
+  <!-- 分类筛选 -->
+  <view class="filter-section">
+    <scroll-view class="category-scroll" scroll-x="{{true}}">
+      <view class="category-list">
+        <view class="category-item {{selectedCategory === item.id ? 'active' : ''}}" 
+              wx:for="{{categories}}" wx:key="id" 
+              bindtap="onCategorySelect" data-id="{{item.id}}">
+          {{item.name}}
+        </view>
+      </view>
+    </scroll-view>
+  </view>
+
+  <!-- 排序筛选 -->
+  <view class="sort-section">
+    <view class="sort-item {{sortType === 'time' ? 'active' : ''}}" bindtap="onSortSelect" data-type="time">
+      最新发布
+    </view>
+    <view class="sort-item {{sortType === 'price' ? 'active' : ''}}" bindtap="onSortSelect" data-type="price">
+      价格排序
+    </view>
+    <view class="sort-item {{sortType === 'distance' ? 'active' : ''}}" bindtap="onSortSelect" data-type="distance">
+      距离最近
+    </view>
+  </view>
+
+  <!-- 服务列表 -->
+  <view class="service-list">
+    <view class="service-item" wx:for="{{serviceList}}" wx:key="_id" bindtap="goToServiceDetail" data-id="{{item._id}}">
+      <image class="service-image" src="{{item.images[0] || '/images/default-service.png'}}" mode="aspectFill"></image>
+      <view class="service-info">
+        <view class="service-header">
+          <view class="service-title">{{item.title}}</view>
+          <view class="service-status status-{{item.statusClass}}">{{item.statusText}}</view>
+        </view>
+        <view class="service-desc">{{item.description}}</view>
+        <view class="service-meta">
+          <view class="service-price">
+            <text class="price-symbol">¥</text>
+            <text class="price-value">{{item.price}}</text>
+          </view>
+          <view class="service-location">
+            <text class="location-icon-text">📍</text>
+            <text>{{item.location.address || '附近'}}</text>
+          </view>
+        </view>
+        <view class="service-footer">
+          <view class="publisher-info">
+            <image class="publisher-avatar" src="{{item.publisher.avatarUrl || '/images/default-avatar.png'}}" mode="aspectFill"></image>
+            <text class="publisher-name">{{item.publisher.nickName}}</text>
+          </view>
+          <view class="service-time">{{item.createTimeText}}</view>
+        </view>
+      </view>
+    </view>
+  </view>
+
+  <!-- 空状态 -->
+  <empty wx:if="{{serviceList.length === 0 && !loading}}" text="暂无相关服务"></empty>
+
+  <!-- 加载状态 -->
+  <loading show="{{loading}}" text="加载中..."></loading>
+
+  <!-- 发布按钮 -->
+  <view class="publish-btn" bindtap="goToPublish">
+    <text class="publish-icon-text">＋</text>
+    <text>发布服务</text>
+  </view>
+</view> 

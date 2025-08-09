@@ -1,0 +1,9 @@
+{
+  "navigationBarTitleText": "CloudBase 小程序模板",
+  "usingComponents": {
+    "cloudbase-badge": "/components/cloudbase-badge/index",
+    "loading": "/components/loading/index"
+  },
+  "enablePullDownRefresh": true,
+  "backgroundTextStyle": "dark"
+}

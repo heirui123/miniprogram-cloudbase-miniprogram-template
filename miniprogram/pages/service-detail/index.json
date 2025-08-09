@@ -1,0 +1,6 @@
+{
+  "navigationBarTitleText": "服务详情",
+  "usingComponents": {
+    "loading": "/components/loading/index"
+  }
+} 

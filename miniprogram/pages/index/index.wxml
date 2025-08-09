@@ -1,0 +1,86 @@
+<view class="container">
+  <!-- 顶部社区信息 -->
+  <view class="header">
+    <view class="location-info">
+      <image class="location-icon" src="/images/location.png" mode="aspectFit"></image>
+      <text class="location-text">{{address || '正在获取位置...'}}</text>
+      <image class="arrow-icon" src="/images/arrow-down.png" mode="aspectFit"></image>
+    </view>
+    <view class="user-info" bindtap="goToProfile">
+      <image class="avatar" src="{{userInfo.avatarUrl || '/images/default-avatar.png'}}" mode="aspectFill"></image>
+    </view>
+  </view>
+
+  <!-- Banner轮播图 -->
+  <view class="banner-section">
+    <swiper class="banner-swiper" indicator-dots="{{true}}" autoplay="{{true}}" interval="3000" duration="500">
+      <swiper-item wx:for="{{banners}}" wx:key="id">
+        <image class="banner-image" src="{{item.image}}" mode="aspectFill" bindtap="onBannerTap" data-item="{{item}}"></image>
+      </swiper-item>
+    </swiper>
+  </view>
+
+  <!-- 分类入口 -->
+  <view class="category-section">
+    <view class="section-title">服务分类</view>
+    <view class="category-grid">
+      <view class="category-item" wx:for="{{categories}}" wx:key="id" bindtap="goToCategory" data-category="{{item}}">
+        <view class="category-icon-wrapper">
+          <image class="category-icon" src="{{item.icon}}" mode="aspectFit"></image>
+        </view>
+        <text class="category-name">{{item.name}}</text>
+      </view>
+    </view>
+  </view>
+
+  <!-- 推荐服务 -->
+  <view class="recommend-section">
+    <view class="section-header">
+      <view class="section-title">推荐服务</view>
+      <view class="more-btn" bindtap="goToLifeService">查看更多</view>
+    </view>
+    <view class="service-list">
+      <view class="service-item" wx:for="{{recommendServices}}" wx:key="_id" bindtap="goToServiceDetail" data-id="{{item._id}}">
+        <image class="service-image" src="{{item.images[0] || '/images/default-service.png'}}" mode="aspectFill"></image>
+        <view class="service-info">
+          <view class="service-title">{{item.title}}</view>
+          <view class="service-desc">{{item.description}}</view>
+          <view class="service-meta">
+            <view class="service-price">
+              <text class="price-symbol">¥</text>
+              <text class="price-value">{{item.price}}</text>
+            </view>
+            <view class="service-distance">{{item.distance || '附近'}}</view>
+          </view>
+        </view>
+      </view>
+    </view>
+  </view>
+
+  <!-- 最新服务 -->
+  <view class="latest-section">
+    <view class="section-header">
+      <view class="section-title">最新服务</view>
+      <view class="more-btn" bindtap="goToLifeService">查看更多</view>
+    </view>
+    <view class="service-list">
+      <view class="service-item" wx:for="{{latestServices}}" wx:key="_id" bindtap="goToServiceDetail" data-id="{{item._id}}">
+        <image class="service-image" src="{{item.images[0] || '/images/default-service.png'}}" mode="aspectFill"></image>
+        <view class="service-info">
+          <view class="service-title">{{item.title}}</view>
+          <view class="service-desc">{{item.description}}</view>
+          <view class="service-meta">
+            <view class="service-price">
+              <text class="price-symbol">¥</text>
+              <text class="price-value">{{item.price}}</text>
+            </view>
+            <view class="service-time">{{item.createTime}}</view>
+          </view>
+        </view>
+      </view>
+    </view>
+  </view>
+
+  <!-- 加载状态 -->
+  <loading show="{{loading}}" text="加载中..."></loading>
+</view>
