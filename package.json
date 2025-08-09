@@ -1,0 +1,24 @@
+{
+  "name": "miniprogram-cloudbase-miniprogram-template",
+  "version": "1.0.0",
+  "description": "一个基于微信小程序 + 云开发的社区服务平台，提供跑腿代办、二手闲置、宠物服务、好邻居互助、生活服务等核心功能。",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "gen:images": "node scripts/gen-images.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/heirui123/miniprogram-cloudbase-miniprogram-template.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/heirui123/miniprogram-cloudbase-miniprogram-template/issues"
+  },
+  "homepage": "https://github.com/heirui123/miniprogram-cloudbase-miniprogram-template#readme",
+  "devDependencies": {
+    "jimp": "^0.22.10"
+  }
+}

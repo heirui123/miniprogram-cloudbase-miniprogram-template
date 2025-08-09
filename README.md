@@ -253,3 +253,15 @@ wx.cloud.init({
 ---
 
 **社区服务小程序** - 让邻里互助更简单，让社区生活更温暖！ 🏠✨
+
+## 📜 素材来源与许可
+
+- 图标：优先使用开源图标库（MIT 许可）：
+  - Lucide（MIT）：`https://lucide.dev`
+  - Tabler Icons（MIT）：`https://tabler-icons.io`
+  - Heroicons（MIT）：`https://heroicons.com`
+- Banner：自制渐变背景与几何元素（无需授权）。可选使用 `https://www.svgbackgrounds.com/` 免费授权资源作为纹理点缀（遵循其授权条款）。
+- 生成脚本：`scripts/gen-images.js` 用于生成/覆盖 `miniprogram/images/` 下的占位与统一风格图片。所有图片仅作为占位示例，可在后续替换为正式设计图。
+- 版权保留：`miniprogram/images/powered-by-cloudbase-badge.svg` 保留并遵循原始许可。
+
+> 注：如替换为第三方正式素材，请更新本段落，标注来源与许可，确保可商用或等价开源许可。

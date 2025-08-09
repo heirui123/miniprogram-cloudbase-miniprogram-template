@@ -1,5 +1,5 @@
 {
-  "navigationBarTitleText": "CloudBase 小程序模板",
+  "navigationBarTitleText": "邻居互助",
   "usingComponents": {
     "cloudbase-badge": "/components/cloudbase-badge/index",
     "loading": "/components/loading/index"
