@@ -1,4 +1,9 @@
 <view class="container">
+  <!-- 页面标题 -->
+  <view class="page-header">
+    <text class="page-title">{{categoryConfig[serviceType].title}}</text>
+  </view>
+
   <form bindsubmit="submitForm">
     <!-- 服务类型选择 -->
     <view class="form-section">
@@ -31,8 +36,13 @@
         <text class="form-label">服务价格</text>
         <view class="price-input-wrapper">
           <text class="price-symbol">¥</text>
-          <input class="form-input price-input" name="price" type="number" placeholder="请输入价格" value="{{formData.price}}" bindinput="onInputChange" data-field="price"></input>
+          <input class="form-input price-input" name="price" type="number" placeholder="{{serviceType === 'neighbor-help' ? '免费请输入0' : '请输入价格'}}" value="{{formData.price}}" bindinput="onInputChange" data-field="price"></input>
+          <picker class="price-unit-picker" range="{{priceUnits}}" value="{{priceUnits.indexOf(formData.priceUnit)}}" bindchange="onPriceUnitChange">
+            <view class="price-unit-text">{{formData.priceUnit}}</view>
+            <image class="arrow-down" src="/images/arrow-down.png" mode="aspectFit"></image>
+          </picker>
         </view>
+        <text class="price-tip" wx:if="{{serviceType === 'neighbor-help'}}">邻里互助可以是免费的，请选择"免费"价格单位</text>
       </view>
     </view>
 

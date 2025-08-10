@@ -7,13 +7,36 @@
     </view>
   </view>
 
+  <!-- 搜索历史 -->
+  <view class="search-history" wx:if="{{showSearchHistory && searchHistory.length > 0}}">
+    <view class="history-header">
+      <text class="history-title">搜索历史</text>
+      <text class="clear-history" bindtap="clearSearchHistory">清空</text>
+    </view>
+    <view class="history-list">
+      <view class="history-item" wx:for="{{searchHistory}}" wx:key="index" bindtap="selectSearchHistory" data-keyword="{{item}}">
+        <text class="history-keyword">{{item}}</text>
+        <text class="history-icon">🔍</text>
+      </view>
+    </view>
+  </view>
+
+  <!-- 搜索建议 -->
+  <view class="search-suggestions" wx:if="{{showSuggestions && searchSuggestions.length > 0}}">
+    <view class="suggestions-title">搜索建议</view>
+    <view class="suggestions-list">
+      <view class="suggestion-item" wx:for="{{searchSuggestions}}" wx:key="text" bindtap="selectSuggestion" data-suggestion="{{item}}">
+        <text class="suggestion-text">{{item.text}}</text>
+        <text class="suggestion-type">{{item.typeText}}</text>
+      </view>
+    </view>
+  </view>
+
   <!-- 分类筛选 -->
   <view class="filter-section">
     <scroll-view class="category-scroll" scroll-x="{{true}}">
       <view class="category-list">
-        <view class="category-item {{selectedCategory === item.id ? 'active' : ''}}" 
-              wx:for="{{categories}}" wx:key="id" 
-              bindtap="onCategorySelect" data-id="{{item.id}}">
+        <view class="category-item {{selectedCategory === item.id ? 'active' : ''}}" wx:for="{{categories}}" wx:key="id" bindtap="onCategorySelect" data-id="{{item.id}}">
           {{item.name}}
         </view>
       </view>
@@ -30,6 +53,40 @@
     </view>
     <view class="sort-item {{sortType === 'distance' ? 'active' : ''}}" bindtap="onSortSelect" data-type="distance">
       距离最近
+    </view>
+  </view>
+
+  <!-- 价格筛选 -->
+  <view class="price-filter-section">
+    <scroll-view class="price-scroll" scroll-x="{{true}}">
+      <view class="price-list">
+        <view class="price-item {{priceRange === item.id ? 'active' : ''}}" wx:for="{{priceRanges}}" wx:key="id" bindtap="onPriceRangeSelect" data-range="{{item.id}}">
+          {{item.name}}
+        </view>
+      </view>
+    </scroll-view>
+    <view class="reset-filters" bindtap="resetFilters">
+      <text class="reset-icon">🔄</text>
+      <text>重置</text>
+    </view>
+  </view>
+
+  <!-- 筛选状态 -->
+  <view class="filter-status" wx:if="{{selectedCategory || priceRange || searchKeyword}}">
+    <text class="status-text">当前筛选：</text>
+    <view class="status-tags">
+      <view class="status-tag" wx:if="{{selectedCategory}}">
+        {{selectedCategoryName}}
+        <text class="remove-tag" bindtap="removeCategoryFilter">×</text>
+      </view>
+      <view class="status-tag" wx:if="{{priceRange}}">
+        {{selectedPriceRangeName}}
+        <text class="remove-tag" bindtap="removePriceFilter">×</text>
+      </view>
+      <view class="status-tag" wx:if="{{searchKeyword}}">
+        "{{searchKeyword}}"
+        <text class="remove-tag" bindtap="removeSearchFilter">×</text>
+      </view>
     </view>
   </view>
 

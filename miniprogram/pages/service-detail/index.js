@@ -235,9 +235,52 @@ Page({
 
   // 发送消息
   sendMessage: function() {
-    wx.showToast({
-      title: '消息功能开发中',
-      icon: 'none'
+    // 检查是否已登录
+    if (!getApp().globalData.userInfo) {
+      wx.showModal({
+        title: '需要登录',
+        content: '请先登录后再发送消息',
+        confirmText: '去登录',
+        success: (res) => {
+          if (res.confirm) {
+            wx.switchTab({
+              url: '/pages/profile/index'
+            })
+          }
+        }
+      })
+      return
+    }
+
+    // 跳转到聊天页面或显示联系方式
+    wx.showActionSheet({
+      itemList: ['复制微信号', '拨打电话'],
+      success: (res) => {
+        if (res.tapIndex === 0) {
+          // 复制微信号
+          wx.setClipboardData({
+            data: this.data.service.contactInfo.wechat || '暂无微信号',
+            success: () => {
+              wx.showToast({
+                title: '微信号已复制',
+                icon: 'success'
+              })
+            }
+          })
+        } else if (res.tapIndex === 1) {
+          // 拨打电话
+          if (this.data.service.contactInfo.phone) {
+            wx.makePhoneCall({
+              phoneNumber: this.data.service.contactInfo.phone
+            })
+          } else {
+            wx.showToast({
+              title: '暂无联系电话',
+              icon: 'none'
+            })
+          }
+        }
+      }
     })
   },
 

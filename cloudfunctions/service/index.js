@@ -149,6 +149,22 @@ async function getServiceList(wxContext, query) {
       }
     }
 
+    // 价格筛选
+    if (query?.priceRange) {
+      const priceRange = query.priceRange
+      if (priceRange === '0-50') {
+        whereCondition = _.and([whereCondition, { price: _.lte(50) }])
+      } else if (priceRange === '50-100') {
+        whereCondition = _.and([whereCondition, { price: _.gte(50).and(_.lte(100)) }])
+      } else if (priceRange === '100-200') {
+        whereCondition = _.and([whereCondition, { price: _.gte(100).and(_.lte(200)) }])
+      } else if (priceRange === '200-500') {
+        whereCondition = _.and([whereCondition, { price: _.gte(200).and(_.lte(500)) }])
+      } else if (priceRange === '500+') {
+        whereCondition = _.and([whereCondition, { price: _.gte(500) }])
+      }
+    }
+
     // 排序
     let orderField = 'createTime'
     let orderDirection = 'desc'
