@@ -45,7 +45,6 @@ Page({
     this.setData({ loading: true })
 
     const query = {
-      type: 'errand',
       page: this.data.page,
       limit: 10
     }
@@ -65,19 +64,12 @@ Page({
     wx.cloud.callFunction({
       name: 'service',
       data: {
-        action: 'getList',
+        action: 'getErrandTasks',
         query: query
       }
     }).then(res => {
       if (res.result.success) {
-        const newTasks = res.result.data.map(task => {
-          return {
-            ...task,
-            statusText: this.getStatusText(task.status),
-            statusClass: this.mapStatusClass(task.status),
-            createTimeText: this.formatTime(task.createTime)
-          }
-        })
+        const newTasks = res.result.data
 
         this.setData({
           taskList: this.data.page === 1 ? newTasks : [...this.data.taskList, ...newTasks],
@@ -131,54 +123,11 @@ Page({
     this.refreshData()
   },
 
-  // 获取状态文本
-  getStatusText: function(status) {
-    const statusMap = {
-      '发布中': '可接单',
-      '已接单': '进行中',
-      '已完成': '已完成',
-      '已取消': '已取消'
-    }
-    return statusMap[status] || status
-  },
-
-  // 将状态映射为 ASCII 安全的 class 名
-    mapStatusClass: function(status) {
-    const classMap = {
-      '发布中': 'publishing',
-      '已接单': 'accepted',
-      '已完成': 'done',
-      '已取消': 'canceled'
-    }
-    return classMap[status] || ''
-  },
- 
-   // 格式化时间
-  formatTime: function(timestamp) {
-    if (!timestamp) return ''
-    
-    const date = new Date(timestamp)
-    const now = new Date()
-    const diff = now - date
-    
-    if (diff < 60000) { // 1分钟内
-      return '刚刚'
-    } else if (diff < 3600000) { // 1小时内
-      return Math.floor(diff / 60000) + '分钟前'
-    } else if (diff < 86400000) { // 24小时内
-      return Math.floor(diff / 3600000) + '小时前'
-    } else if (diff < 2592000000) { // 30天内
-      return Math.floor(diff / 86400000) + '天前'
-    } else {
-      return date.toLocaleDateString()
-    }
-  },
-
   // 跳转到任务详情
   goToTaskDetail: function(e) {
     const taskId = e.currentTarget.dataset.id
     wx.navigateTo({
-      url: `/pages/task-detail/index?id=${taskId}`
+      url: `/pages/service-detail/index?id=${taskId}`
     })
   },
 

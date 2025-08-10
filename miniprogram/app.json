@@ -11,7 +11,10 @@
     "pages/service-detail/index",
     "pages/publish-service/index",
     "pages/order-detail/index",
-    "pages/admin-review/index"
+    "pages/admin-review/index",
+    "pages/review/index",
+    "pages/notification/index",
+    "pages/payment-test/index"
   ],
   "window": {
     "backgroundTextStyle": "light",

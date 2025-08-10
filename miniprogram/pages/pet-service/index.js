@@ -6,22 +6,38 @@ Page({
     loading: false,
     searchKeyword: '',
     selectedServiceType: '',
-    sortType: 'latest',
+    selectedServiceTypeName: '',
+    sortType: 'time',
+    priceRange: '',
+    selectedPriceRangeName: '',
     serviceList: [],
     serviceTypes: [
-      { id: '', name: '全部', icon: '/images/pet-all.png' },
-      { id: 'boarding', name: '寄养', icon: '/images/pet-boarding.png' },
-      { id: 'walking', name: '遛狗', icon: '/images/pet-walking.png' },
-      { id: 'grooming', name: '洗护', icon: '/images/pet-grooming.png' },
-      { id: 'training', name: '训练', icon: '/images/pet-training.png' },
-      { id: 'medical', name: '医疗', icon: '/images/pet-medical.png' },
-      { id: 'other', name: '其他', icon: '/images/pet-other.png' }
+      { id: '', name: '全部' },
+      { id: 'boarding', name: '寄养' },
+      { id: 'walking', name: '遛狗' },
+      { id: 'grooming', name: '洗护' },
+      { id: 'training', name: '训练' },
+      { id: 'medical', name: '医疗' },
+      { id: 'other', name: '其他' }
     ],
+    priceRanges: [
+      { id: '', name: '全部价格' },
+      { id: '0-50', name: '50元以下' },
+      { id: '50-100', name: '50-100元' },
+      { id: '100-200', name: '100-200元' },
+      { id: '200-500', name: '200-500元' },
+      { id: '500+', name: '500元以上' }
+    ],
+    searchHistory: [],
+    searchSuggestions: [],
+    showSearchHistory: false,
+    showSuggestions: false,
     page: 1,
     hasMore: true
   },
 
   onLoad: function() {
+    this.loadSearchHistory()
     this.loadServices()
   },
 
@@ -61,6 +77,10 @@ Page({
       query.keyword = this.data.searchKeyword
     }
 
+    if (this.data.priceRange) {
+      query.priceRange = this.data.priceRange
+    }
+
     // 添加排序
     query.sort = this.data.sortType
 
@@ -76,6 +96,7 @@ Page({
           return {
             ...service,
             statusText: this.getStatusText(service.status),
+            statusClass: this.getStatusClass(service.status),
             createTimeText: this.formatTime(service.createTime)
           }
         })
@@ -104,21 +125,42 @@ Page({
 
   // 搜索输入
   onSearchInput: function(e) {
+    const keyword = e.detail.value
     this.setData({
-      searchKeyword: e.detail.value
+      searchKeyword: keyword,
+      showSearchHistory: false,
+      showSuggestions: false
     })
+
+    if (keyword.trim()) {
+      this.generateSearchSuggestions(keyword)
+    } else {
+      this.setData({
+        showSearchHistory: true,
+        showSuggestions: false
+      })
+    }
   },
 
   // 搜索
   onSearch: function() {
+    if (this.data.searchKeyword.trim()) {
+      this.addSearchHistory(this.data.searchKeyword)
+    }
+    this.setData({
+      showSearchHistory: false,
+      showSuggestions: false
+    })
     this.refreshData()
   },
 
   // 服务类型选择
   onServiceTypeSelect: function(e) {
     const serviceTypeId = e.currentTarget.dataset.id
+    const serviceType = this.data.serviceTypes.find(item => item.id === serviceTypeId)
     this.setData({
-      selectedServiceType: serviceTypeId
+      selectedServiceType: serviceTypeId,
+      selectedServiceTypeName: serviceType ? serviceType.name : ''
     })
     this.refreshData()
   },
@@ -132,15 +174,194 @@ Page({
     this.refreshData()
   },
 
+  // 价格范围选择
+  onPriceRangeSelect: function(e) {
+    const priceRange = e.currentTarget.dataset.range
+    const priceRangeItem = this.data.priceRanges.find(item => item.id === priceRange)
+    this.setData({
+      priceRange: priceRange,
+      selectedPriceRangeName: priceRangeItem ? priceRangeItem.name : ''
+    })
+    this.refreshData()
+  },
+
+  // 重置筛选
+  resetFilters: function() {
+    this.setData({
+      selectedServiceType: '',
+      selectedServiceTypeName: '',
+      priceRange: '',
+      selectedPriceRangeName: '',
+      searchKeyword: '',
+      sortType: 'latest'
+    })
+    this.refreshData()
+  },
+
+  // 移除服务类型筛选
+  removeServiceTypeFilter: function() {
+    this.setData({
+      selectedServiceType: '',
+      selectedServiceTypeName: ''
+    })
+    this.refreshData()
+  },
+
+  // 移除价格筛选
+  removePriceFilter: function() {
+    this.setData({
+      priceRange: '',
+      selectedPriceRangeName: ''
+    })
+    this.refreshData()
+  },
+
+  // 移除搜索筛选
+  removeSearchFilter: function() {
+    this.setData({
+      searchKeyword: ''
+    })
+    this.refreshData()
+  },
+
+  // 加载搜索历史
+  loadSearchHistory: function() {
+    const history = wx.getStorageSync('petServiceSearchHistory') || []
+    this.setData({
+      searchHistory: history
+    })
+  },
+
+  // 添加搜索历史
+  addSearchHistory: function(keyword) {
+    let history = this.data.searchHistory
+    // 移除重复项
+    history = history.filter(item => item !== keyword)
+    // 添加到开头
+    history.unshift(keyword)
+    // 限制数量
+    if (history.length > 10) {
+      history = history.slice(0, 10)
+    }
+    
+    this.setData({
+      searchHistory: history
+    })
+    wx.setStorageSync('petServiceSearchHistory', history)
+  },
+
+  // 清空搜索历史
+  clearSearchHistory: function() {
+    this.setData({
+      searchHistory: []
+    })
+    wx.removeStorageSync('petServiceSearchHistory')
+  },
+
+  // 选择搜索历史
+  selectSearchHistory: function(e) {
+    const keyword = e.currentTarget.dataset.keyword
+    this.setData({
+      searchKeyword: keyword,
+      showSearchHistory: false
+    })
+    this.onSearch()
+  },
+
+  // 生成搜索建议
+  generateSearchSuggestions: function(keyword) {
+    const suggestions = []
+    
+    // 基于服务类型的建议
+    this.data.serviceTypes.forEach(serviceType => {
+      if (serviceType.name.includes(keyword) && serviceType.id !== '') {
+        suggestions.push({
+          type: 'category',
+          typeText: '分类',
+          text: serviceType.name,
+          value: serviceType.id
+        })
+      }
+    })
+    
+    // 基于搜索历史的建议
+    this.data.searchHistory.forEach(historyItem => {
+      if (historyItem.includes(keyword) && !suggestions.find(s => s.text === historyItem)) {
+        suggestions.push({
+          type: 'history',
+          typeText: '历史',
+          text: historyItem,
+          value: historyItem
+        })
+      }
+    })
+    
+    // 通用建议
+    const commonSuggestions = [
+      '宠物寄养', '遛狗服务', '宠物洗护', '宠物训练',
+      '宠物医疗', '宠物美容', '宠物摄影', '宠物托运'
+    ]
+    
+    commonSuggestions.forEach(suggestion => {
+      if (suggestion.includes(keyword) && !suggestions.find(s => s.text === suggestion)) {
+        suggestions.push({
+          type: 'common',
+          typeText: '推荐',
+          text: suggestion,
+          value: suggestion
+        })
+      }
+    })
+    
+    // 限制建议数量
+    suggestions.splice(5)
+    
+    this.setData({
+      searchSuggestions: suggestions,
+      showSuggestions: suggestions.length > 0
+    })
+  },
+
+  // 选择搜索建议
+  selectSuggestion: function(e) {
+    const suggestion = e.currentTarget.dataset.suggestion
+    this.setData({
+      searchKeyword: suggestion.text,
+      showSuggestions: false,
+      showSearchHistory: false
+    })
+    
+    // 如果是分类建议，自动选择分类
+    if (suggestion.type === 'category') {
+      this.setData({
+        selectedServiceType: suggestion.value
+      })
+    }
+    
+    // 执行搜索
+    this.onSearch()
+  },
+
   // 获取状态文本
   getStatusText: function(status) {
     const statusMap = {
-      '发布中': '可预约',
-      '已预约': '已预约',
+      '发布中': '可接单',
+      '已接单': '进行中',
       '已完成': '已完成',
       '已取消': '已取消'
     }
     return statusMap[status] || status
+  },
+
+  // 获取状态样式类
+  getStatusClass: function(status) {
+    const statusClassMap = {
+      '发布中': 'publishing',
+      '已接单': 'accepted',
+      '已完成': 'done',
+      '已取消': 'canceled'
+    }
+    return statusClassMap[status] || ''
   },
 
   // 格式化时间
@@ -346,5 +567,14 @@ Page({
   // 上拉加载更多
   onReachBottom: function() {
     this.loadServices()
+  },
+
+  // 分享
+  onShareAppMessage: function() {
+    return {
+      title: '宠物服务 - 专业宠物护理，贴心服务',
+      path: '/pages/pet-service/index',
+      imageUrl: '/images/default-service.png'
+    }
   }
 }) 

@@ -53,7 +53,7 @@ Page({
       },
       {
         id: 5,
-        name: '好邻居互助',
+        name: '邻居互助',
         icon: '/images/category-neighbor.png',
         type: 'neighbor-help'
       }

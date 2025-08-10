@@ -3,6 +3,7 @@
 .container {
   padding: 0;
   background: #F8F9FA;
+  padding-bottom: 120rpx;
 }
 
 /* 服务图片轮播 */
@@ -64,6 +65,8 @@
 
 .service-price {
   margin-bottom: 20rpx;
+  display: flex;
+  align-items: baseline;
 }
 
 .price-symbol {
@@ -78,6 +81,12 @@
   color: #FF6B6B;
 }
 
+.price-unit {
+  font-size: 24rpx;
+  color: #7F8C8D;
+  margin-left: 8rpx;
+}
+
 .service-desc {
   font-size: 28rpx;
   color: #2C3E50;
@@ -89,6 +98,34 @@
   display: flex;
   flex-wrap: wrap;
   gap: 10rpx;
+  margin-bottom: 20rpx;
+}
+
+/* 服务统计信息 */
+.service-stats {
+  display: flex;
+  justify-content: space-around;
+  padding: 20rpx 0;
+  border-top: 1rpx solid #E9ECEF;
+  margin-top: 20rpx;
+}
+
+.stat-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.stat-value {
+  font-size: 32rpx;
+  font-weight: bold;
+  color: #2C3E50;
+  margin-bottom: 8rpx;
+}
+
+.stat-label {
+  font-size: 24rpx;
+  color: #7F8C8D;
 }
 
 /* 发布者信息 */
@@ -130,6 +167,7 @@
   display: flex;
   align-items: center;
   gap: 20rpx;
+  margin-bottom: 10rpx;
 }
 
 .credit-score {
@@ -154,6 +192,16 @@
   background: rgba(78, 205, 196, 0.1);
   padding: 4rpx 12rpx;
   border-radius: 12rpx;
+}
+
+.publisher-stats {
+  display: flex;
+  gap: 20rpx;
+}
+
+.publisher-stat {
+  font-size: 22rpx;
+  color: #7F8C8D;
 }
 
 .contact-btns {
@@ -184,9 +232,107 @@
   flex: 1;
 }
 
+/* 评价统计 */
+.review-stats {
+  margin: 20rpx;
+}
+
+.review-overview {
+  display: flex;
+  gap: 40rpx;
+}
+
+.overall-rating {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  min-width: 120rpx;
+}
+
+.rating-score {
+  font-size: 48rpx;
+  font-weight: bold;
+  color: #FF6B6B;
+  margin-bottom: 10rpx;
+}
+
+.rating-stars {
+  display: flex;
+  margin-bottom: 10rpx;
+}
+
+.star {
+  color: #FFD700;
+  font-size: 24rpx;
+}
+
+.rating-count {
+  font-size: 24rpx;
+  color: #7F8C8D;
+}
+
+.rating-distribution {
+  flex: 1;
+}
+
+.rating-bar {
+  display: flex;
+  align-items: center;
+  margin-bottom: 10rpx;
+}
+
+.rating-label {
+  font-size: 24rpx;
+  color: #7F8C8D;
+  width: 60rpx;
+}
+
+.rating-progress {
+  flex: 1;
+  height: 8rpx;
+  background: #E9ECEF;
+  border-radius: 4rpx;
+  margin: 0 10rpx;
+  overflow: hidden;
+}
+
+.progress-bar {
+  height: 100%;
+  background: #FFD700;
+  border-radius: 4rpx;
+  transition: width 0.3s ease;
+}
+
+.rating-percentage {
+  font-size: 24rpx;
+  color: #7F8C8D;
+  width: 60rpx;
+  text-align: right;
+}
+
 /* 评价列表 */
 .reviews-section {
   margin: 20rpx;
+}
+
+.section-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20rpx;
+}
+
+.review-filter {
+  display: flex;
+  align-items: center;
+  gap: 8rpx;
+  font-size: 24rpx;
+  color: #7F8C8D;
+}
+
+.filter-icon {
+  width: 24rpx;
+  height: 24rpx;
 }
 
 .review-item {
@@ -245,15 +391,103 @@
   margin-bottom: 15rpx;
 }
 
+.review-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8rpx;
+  margin-bottom: 15rpx;
+}
+
+.review-tag {
+  font-size: 22rpx;
+  color: #4ECDC4;
+  background: rgba(78, 205, 196, 0.1);
+  padding: 4rpx 12rpx;
+  border-radius: 12rpx;
+}
+
 .review-images {
   display: flex;
   gap: 10rpx;
+  margin-bottom: 15rpx;
 }
 
 .review-image {
   width: 120rpx;
   height: 120rpx;
   border-radius: 8rpx;
+}
+
+.review-actions {
+  display: flex;
+  gap: 30rpx;
+}
+
+.action-item {
+  display: flex;
+  align-items: center;
+  gap: 8rpx;
+}
+
+.action-icon {
+  width: 24rpx;
+  height: 24rpx;
+}
+
+.action-text {
+  font-size: 24rpx;
+  color: #7F8C8D;
+}
+
+/* 加载更多评价 */
+.load-more {
+  text-align: center;
+  padding: 20rpx;
+  color: #7F8C8D;
+  font-size: 26rpx;
+}
+
+/* 相关推荐 */
+.related-services {
+  margin: 20rpx;
+}
+
+.service-list {
+  display: flex;
+  gap: 20rpx;
+  overflow-x: auto;
+}
+
+.service-card {
+  min-width: 200rpx;
+  background: #FFFFFF;
+  border-radius: 12rpx;
+  overflow: hidden;
+  box-shadow: 0 2rpx 8rpx rgba(0, 0, 0, 0.1);
+}
+
+.service-thumb {
+  width: 200rpx;
+  height: 150rpx;
+}
+
+.service-info-mini {
+  padding: 15rpx;
+}
+
+.service-title-mini {
+  font-size: 24rpx;
+  color: #2C3E50;
+  margin-bottom: 8rpx;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.service-price-mini {
+  font-size: 26rpx;
+  color: #FF6B6B;
+  font-weight: bold;
 }
 
 /* 操作按钮 */
@@ -272,4 +506,61 @@
 
 .action-buttons .btn {
   flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8rpx;
+}
+
+.btn-icon {
+  width: 24rpx;
+  height: 24rpx;
+}
+
+/* 通用样式 */
+.card {
+  background: #FFFFFF;
+  border-radius: 16rpx;
+  padding: 30rpx;
+  box-shadow: 0 2rpx 8rpx rgba(0, 0, 0, 0.1);
+}
+
+.tag {
+  padding: 8rpx 16rpx;
+  border-radius: 20rpx;
+  font-size: 24rpx;
+}
+
+.tag-primary {
+  background: rgba(255, 107, 107, 0.1);
+  color: #FF6B6B;
+}
+
+.btn {
+  padding: 20rpx 30rpx;
+  border-radius: 12rpx;
+  font-size: 28rpx;
+  border: none;
+  text-align: center;
+}
+
+.btn-primary {
+  background: #FF6B6B;
+  color: #FFFFFF;
+}
+
+.btn-secondary {
+  background: #4ECDC4;
+  color: #FFFFFF;
+}
+
+.btn-outline {
+  background: transparent;
+  color: #7F8C8D;
+  border: 1rpx solid #E9ECEF;
+}
+
+.btn-small {
+  padding: 12rpx 20rpx;
+  font-size: 24rpx;
 } 

@@ -21,15 +21,15 @@
     <view class="review-content">
       <text class="content-label">评价内容</text>
       <textarea class="review-textarea" 
-                placeholder="请分享您的服务体验..." 
+                placeholder="请分享您的服务体验（至少5个字）..." 
                 value="{{reviewContent}}"
                 bindinput="onContentInput"
                 maxlength="500"></textarea>
-      <text class="char-count">{{reviewContent.length}}/500</text>
+      <text class="char-count {{reviewContent.length >= 5 ? 'valid' : 'invalid'}}">{{reviewContent.length}}/500</text>
     </view>
 
     <view class="review-tags">
-      <text class="tags-label">选择标签</text>
+      <text class="tags-label">选择标签（可选）</text>
       <view class="tags-list">
         <view class="tag-item {{item.selected ? 'active' : ''}}" 
               wx:for="{{reviewTags}}" wx:key="id"
@@ -47,6 +47,34 @@
 
   <!-- 评价列表 -->
   <view class="review-list" wx:else>
+    <!-- 评分统计 -->
+    <view class="rating-stats" wx:if="{{ratingStats.total > 0}}">
+      <view class="stats-header">
+        <view class="average-rating">
+          <text class="rating-score">{{ratingStats.average}}</text>
+          <view class="rating-stars">
+            <view class="star-item {{index < Math.floor(ratingStats.average) ? 'active' : ''}}" 
+                  wx:for="{{5}}" wx:key="*this">
+              ★
+            </view>
+          </view>
+        </view>
+        <view class="rating-count">
+          <text class="count-text">共{{ratingStats.total}}条评价</text>
+        </view>
+      </view>
+      
+      <view class="rating-distribution">
+        <view class="distribution-item" wx:for="{{[5,4,3,2,1]}}" wx:key="*this">
+          <text class="star-label">{{item}}星</text>
+          <view class="progress-bar">
+            <view class="progress-fill" style="width: {{ratingStats.distribution[item] / ratingStats.total * 100}}%"></view>
+          </view>
+          <text class="distribution-count">{{ratingStats.distribution[item]}}</text>
+        </view>
+      </view>
+    </view>
+
     <view class="list-header">
       <text class="list-title">评价列表</text>
       <view class="filter-tabs">
@@ -97,8 +125,9 @@
             <text class="service-provider">服务者：{{item.provider.nickName}}</text>
           </view>
           <view class="review-actions">
-            <button class="btn btn-small btn-outline" bindtap="likeReview" data-id="{{item._id}}">
-              <text class="like-icon">👍</text>
+            <button class="btn btn-small {{item.hasLiked ? 'btn-liked' : 'btn-outline'}}" 
+                    bindtap="likeReview" data-id="{{item._id}}">
+              <text class="like-icon">{{item.hasLiked ? '❤️' : '👍'}}</text>
               <text class="like-count">{{item.likes || 0}}</text>
             </button>
           </view>
@@ -107,9 +136,19 @@
     </view>
 
     <!-- 空状态 -->
-    <empty wx:if="{{reviewList.length === 0 && !loading}}" text="暂无评价" image="/images/empty-review.png"></empty>
+    <view class="empty-state" wx:if="{{reviewList.length === 0 && !loading}}">
+      <image class="empty-image" src="/images/empty-review.png" mode="aspectFit"></image>
+      <text class="empty-text">暂无评价</text>
+    </view>
 
     <!-- 加载状态 -->
-    <loading show="{{loading}}" text="加载中..."></loading>
+    <view class="loading-state" wx:if="{{loading}}">
+      <text class="loading-text">加载中...</text>
+    </view>
+
+    <!-- 加载完成 -->
+    <view class="load-more" wx:if="{{!hasMore && reviewList.length > 0}}">
+      <text class="load-more-text">没有更多评价了</text>
+    </view>
   </view>
 </view> 

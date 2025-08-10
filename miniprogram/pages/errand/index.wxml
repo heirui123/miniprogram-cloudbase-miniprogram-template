@@ -27,10 +27,13 @@
       <text class="sort-text">最新</text>
     </view>
     <view class="sort-item {{sortType === 'price' ? 'active' : ''}}" bindtap="onSortSelect" data-type="price">
-      <text class="sort-text">价格</text>
+      <text class="sort-text">价格低</text>
     </view>
-    <view class="sort-item {{sortType === 'distance' ? 'active' : ''}}" bindtap="onSortSelect" data-type="distance">
-      <text class="sort-text">距离</text>
+    <view class="sort-item {{sortType === 'price_desc' ? 'active' : ''}}" bindtap="onSortSelect" data-type="price_desc">
+      <text class="sort-text">价格高</text>
+    </view>
+    <view class="sort-item {{sortType === 'deadline' ? 'active' : ''}}" bindtap="onSortSelect" data-type="deadline">
+      <text class="sort-text">截止时间</text>
     </view>
   </view>
 
@@ -47,10 +50,17 @@
           <view class="task-desc">{{item.description}}</view>
           <view class="task-meta">
             <view class="task-location">
-                             <text class="location-icon">📍</text>
+              <text class="location-icon">📍</text>
               <text class="location-text">{{item.location.address || '附近'}}</text>
             </view>
-            <view class="task-time">{{item.createTimeText}}</view>
+            <view class="task-time">
+              <text class="time-icon">⏰</text>
+              <text class="time-text">{{item.createTimeText}}</text>
+            </view>
+            <view class="task-deadline" wx:if="{{item.deadlineText}}">
+              <text class="deadline-icon">⏳</text>
+              <text class="deadline-text">{{item.deadlineText}}</text>
+            </view>
           </view>
         </view>
         
@@ -75,10 +85,21 @@
   </view>
 
   <!-- 空状态 -->
-  <empty wx:if="{{taskList.length === 0 && !loading}}" text="暂无跑腿任务"></empty>
+  <view class="empty-state" wx:if="{{taskList.length === 0 && !loading}}">
+    <image class="empty-image" src="/images/empty-task.png" mode="aspectFit"></image>
+    <text class="empty-text">暂无跑腿任务</text>
+    <text class="empty-subtext">快来发布第一个任务吧</text>
+  </view>
 
   <!-- 加载状态 -->
-  <loading show="{{loading}}" text="加载中..."></loading>
+  <view class="loading-state" wx:if="{{loading}}">
+    <text class="loading-text">加载中...</text>
+  </view>
+
+  <!-- 加载完成 -->
+  <view class="load-more" wx:if="{{!hasMore && taskList.length > 0}}">
+    <text class="load-more-text">没有更多任务了</text>
+  </view>
 
   <!-- 发布按钮 -->
   <view class="publish-btn" bindtap="goToPublish">

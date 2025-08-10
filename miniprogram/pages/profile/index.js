@@ -6,6 +6,7 @@ Page({
     userInfo: null,
     serviceCount: 0,
     orderCount: 0,
+    unreadCount: 0,
     loading: false
   },
 
@@ -125,6 +126,22 @@ Page({
     }).catch(err => {
       console.error('获取订单数量失败:', err)
     })
+
+    // 加载未读通知数量
+    wx.cloud.callFunction({
+      name: 'notification',
+      data: {
+        action: 'getUnreadCount'
+      }
+    }).then(res => {
+      if (res.result.success) {
+        this.setData({
+          unreadCount: res.result.data.unreadCount
+        })
+      }
+    }).catch(err => {
+      console.error('获取未读通知数量失败:', err)
+    })
   },
 
   // 跳转到用户信息页面
@@ -157,6 +174,17 @@ Page({
     }
     wx.switchTab({
       url: '/pages/order/index'
+    })
+  },
+
+  // 跳转到消息通知
+  goToNotifications: function() {
+    if (!this.data.userInfo) {
+      this.login()
+      return
+    }
+    wx.navigateTo({
+      url: '/pages/notification/index'
     })
   },
 
@@ -239,7 +267,8 @@ Page({
           this.setData({
             userInfo: null,
             serviceCount: 0,
-            orderCount: 0
+            orderCount: 0,
+            unreadCount: 0
           })
           wx.showToast({
             title: '已退出登录',

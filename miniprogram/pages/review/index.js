@@ -6,6 +6,7 @@ Page({
     showForm: false,
     loading: false,
     orderId: '',
+    serviceId: '',
     orderInfo: {},
     rating: 5,
     ratingText: '非常满意',
@@ -24,7 +25,12 @@ Page({
     filterType: 'all',
     reviewList: [],
     page: 1,
-    hasMore: true
+    hasMore: true,
+    ratingStats: {
+      total: 0,
+      average: 0,
+      distribution: { 1: 0, 2: 0, 3: 0, 4: 0, 5: 0 }
+    }
   },
 
   onLoad: function(options) {
@@ -34,6 +40,12 @@ Page({
         showForm: true
       })
       this.loadOrderInfo()
+    } else if (options.serviceId) {
+      this.setData({
+        serviceId: options.serviceId,
+        showForm: false
+      })
+      this.loadServiceReviews()
     } else {
       this.loadReviewList()
     }
@@ -70,6 +82,57 @@ Page({
       })
     }).finally(() => {
       wx.hideLoading()
+    })
+  },
+
+  // 加载服务评价
+  loadServiceReviews: function() {
+    if (this.data.loading || !this.data.hasMore) return
+
+    this.setData({ loading: true })
+
+    const query = {
+      serviceId: this.data.serviceId,
+      page: this.data.page,
+      limit: 10
+    }
+
+    wx.cloud.callFunction({
+      name: 'review',
+      data: {
+        action: 'getServiceReviews',
+        query: query
+      }
+    }).then(res => {
+      if (res.result.success) {
+        const data = res.result.data
+        const newReviews = data.reviews.map(review => {
+          return {
+            ...review,
+            createTimeText: this.formatTime(review.createTime)
+          }
+        })
+
+        this.setData({
+          reviewList: this.data.page === 1 ? newReviews : [...this.data.reviewList, ...newReviews],
+          ratingStats: data.ratingStats,
+          hasMore: newReviews.length === 10,
+          page: this.data.page + 1
+        })
+      } else {
+        wx.showToast({
+          title: res.result.message || '加载失败',
+          icon: 'none'
+        })
+      }
+    }).catch(err => {
+      console.error('加载服务评价失败:', err)
+      wx.showToast({
+        title: '加载失败',
+        icon: 'none'
+      })
+    }).finally(() => {
+      this.setData({ loading: false })
     })
   },
 
@@ -111,7 +174,9 @@ Page({
 
   // 检查是否可以提交
   checkCanSubmit: function() {
-    const canSubmit = this.data.rating > 0 && this.data.reviewContent.trim().length > 0
+    const canSubmit = this.data.rating > 0 && 
+                     this.data.reviewContent.trim().length >= 5 && 
+                     this.data.reviewContent.trim().length <= 500
     this.setData({
       canSubmit: canSubmit
     })
@@ -140,7 +205,7 @@ Page({
         action: 'create',
         orderId: this.data.orderId,
         rating: this.data.rating,
-        content: this.data.reviewContent,
+        content: this.data.reviewContent.trim(),
         tags: selectedTags
       }
     }).then(res => {
@@ -238,7 +303,16 @@ Page({
   // 点赞评价
   likeReview: function(e) {
     const reviewId = e.currentTarget.dataset.id
+    const review = this.data.reviewList.find(item => item._id === reviewId)
     
+    if (!review) return
+
+    // 如果已经点赞过，则取消点赞
+    if (review.hasLiked) {
+      this.unlikeReview(reviewId)
+      return
+    }
+
     wx.cloud.callFunction({
       name: 'review',
       data: {
@@ -252,7 +326,8 @@ Page({
           if (review._id === reviewId) {
             return {
               ...review,
-              likes: (review.likes || 0) + 1
+              likes: (review.likes || 0) + 1,
+              hasLiked: true
             }
           }
           return review
@@ -276,6 +351,51 @@ Page({
       console.error('点赞失败:', err)
       wx.showToast({
         title: '点赞失败',
+        icon: 'none'
+      })
+    })
+  },
+
+  // 取消点赞
+  unlikeReview: function(reviewId) {
+    wx.cloud.callFunction({
+      name: 'review',
+      data: {
+        action: 'deleteLike',
+        reviewId: reviewId
+      }
+    }).then(res => {
+      if (res.result.success) {
+        // 更新本地数据
+        const reviewList = this.data.reviewList.map(review => {
+          if (review._id === reviewId) {
+            return {
+              ...review,
+              likes: Math.max(0, (review.likes || 1) - 1),
+              hasLiked: false
+            }
+          }
+          return review
+        })
+        
+        this.setData({
+          reviewList: reviewList
+        })
+        
+        wx.showToast({
+          title: '取消点赞成功',
+          icon: 'success'
+        })
+      } else {
+        wx.showToast({
+          title: res.result.message || '操作失败',
+          icon: 'none'
+        })
+      }
+    }).catch(err => {
+      console.error('取消点赞失败:', err)
+      wx.showToast({
+        title: '操作失败',
         icon: 'none'
       })
     })
@@ -309,12 +429,22 @@ Page({
       reviewList: [],
       hasMore: true
     })
-    this.loadReviewList()
+    
+    if (this.data.serviceId) {
+      this.loadServiceReviews()
+    } else {
+      this.loadReviewList()
+    }
+    
     wx.stopPullDownRefresh()
   },
 
   // 上拉加载更多
   onReachBottom: function() {
-    this.loadReviewList()
+    if (this.data.serviceId) {
+      this.loadServiceReviews()
+    } else {
+      this.loadReviewList()
+    }
   }
 }) 

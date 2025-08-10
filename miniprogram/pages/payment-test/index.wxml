@@ -1,0 +1,159 @@
+<!-- payment-test/index.wxml -->
+<view class="container">
+  <!-- 页面标题 -->
+  <view class="header">
+    <view class="title">微信支付功能测试</view>
+    <view class="subtitle">在测试环境验证支付功能</view>
+  </view>
+
+  <!-- 测试状态 -->
+  <view class="test-status" wx:if="{{isTesting == true}}">
+    <view class="status-card">
+      <view class="status-icon">
+        <text class="icon">🔄</text>
+      </view>
+      <view class="status-info">
+        <view class="status-title">测试进行中</view>
+        <view class="status-desc">{{currentTest}}</view>
+        <view class="progress-bar">
+          <view class="progress-fill" style="width: {{testProgress}}%;"></view>
+        </view>
+        <view class="progress-text">{{testProgress}}%</view>
+      </view>
+    </view>
+  </view>
+
+  <!-- 测试报告 -->
+  <view class="test-report" wx:if="{{showReport == true && testReport}}">
+    <view class="report-card">
+      <view class="report-header">
+        <view class="report-title">测试报告</view>
+        <view class="report-time">{{testReport.timestamp}}</view>
+      </view>
+      
+      <view class="report-summary">
+        <view class="summary-item">
+          <text class="summary-label">总测试数</text>
+          <text class="summary-value">{{testReport.summary.total}}</text>
+        </view>
+        <view class="summary-item">
+          <text class="summary-label">通过</text>
+          <text class="summary-value success">{{testReport.summary.passed}}</text>
+        </view>
+        <view class="summary-item">
+          <text class="summary-label">失败</text>
+          <text class="summary-value error">{{testReport.summary.failed}}</text>
+        </view>
+        <view class="summary-item">
+          <text class="summary-label">成功率</text>
+          <text class="summary-value">{{successRate}}%</text>
+        </view>
+      </view>
+      
+      <view class="report-details">
+        <view class="details-title">详细结果</view>
+        <view class="result-list">
+          <view class="result-item {{item.success == true ? 'success' : 'error'}}" 
+                wx:for="{{testReport.results}}" 
+                wx:key="index">
+            <text class="result-status">{{item.success == true ? '✅' : '❌'}}</text>
+            <view class="result-info">
+              <text class="result-name">{{item.testName}}</text>
+              <text class="result-message">{{item.message}}</text>
+            </view>
+          </view>
+        </view>
+      </view>
+      
+      <view class="report-actions">
+        <button class="btn btn-outline" bindtap="exportReport">导出报告</button>
+        <button class="btn btn-outline" bindtap="hideReport">隐藏报告</button>
+      </view>
+    </view>
+  </view>
+
+  <!-- 测试操作 -->
+  <view class="test-actions" wx:if="{{isTesting == false}}">
+    <!-- 自动测试 -->
+    <view class="action-section">
+      <view class="section-title">自动测试</view>
+      <view class="action-buttons">
+        <button class="btn btn-primary" bindtap="startTest" disabled="{{isTesting == true}}">
+          开始完整测试
+        </button>
+        <button class="btn btn-outline" bindtap="viewReport" wx:if="{{showReport == false}}">
+          查看历史报告
+        </button>
+      </view>
+    </view>
+
+    <!-- 手动测试 -->
+    <view class="action-section">
+      <view class="section-title">手动测试</view>
+      <view class="action-buttons">
+        <button class="btn btn-secondary" bindtap="testOrderCreation">
+          测试订单创建
+        </button>
+        <button class="btn btn-secondary" bindtap="testPaymentCreation">
+          测试支付创建
+        </button>
+      </view>
+    </view>
+
+    <!-- 工具操作 -->
+    <view class="action-section">
+      <view class="section-title">工具</view>
+      <view class="action-buttons">
+        <button class="btn btn-outline" bindtap="viewLogs">
+          查看日志
+        </button>
+        <button class="btn btn-danger" bindtap="cleanupTestData">
+          清理测试数据
+        </button>
+      </view>
+    </view>
+  </view>
+
+  <!-- 测试说明 -->
+  <view class="test-info">
+    <view class="info-card">
+      <view class="info-title">测试说明</view>
+      <view class="info-content">
+        <view class="info-item">
+          <text class="info-label">• 自动测试：</text>
+          <text class="info-text">执行完整的支付功能测试流程</text>
+        </view>
+        <view class="info-item">
+          <text class="info-label">• 手动测试：</text>
+          <text class="info-text">单独测试特定功能模块</text>
+        </view>
+        <view class="info-item">
+          <text class="info-label">• 测试环境：</text>
+          <text class="info-text">确保在测试环境进行，避免影响生产数据</text>
+        </view>
+        <view class="info-item">
+          <text class="info-label">• 支付配置：</text>
+          <text class="info-text">需要先在云开发控制台配置微信支付参数</text>
+        </view>
+      </view>
+    </view>
+  </view>
+
+  <!-- 实时测试结果 -->
+  <view class="real-time-results" wx:if="{{testResults.length > 0 && showReport == false}}">
+    <view class="results-card">
+      <view class="results-title">实时测试结果</view>
+      <view class="results-list">
+        <view class="result-item {{item.success == true ? 'success' : 'error'}}" 
+              wx:for="{{testResults}}" 
+              wx:key="index">
+          <text class="result-status">{{item.success == true ? '✅' : '❌'}}</text>
+          <view class="result-info">
+            <text class="result-name">{{item.testName}}</text>
+            <text class="result-message">{{item.message}}</text>
+          </view>
+        </view>
+      </view>
+    </view>
+  </view>
+</view> 

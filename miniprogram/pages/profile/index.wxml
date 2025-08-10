@@ -44,6 +44,18 @@
         <image class="arrow-icon" src="/images/arrow-right.png" mode="aspectFit"></image>
       </view>
 
+      <view class="menu-item" bindtap="goToNotifications">
+        <view class="menu-icon-wrapper">
+          <image class="menu-icon" src="/images/menu-notification.png" mode="aspectFit"></image>
+        </view>
+        <view class="menu-content">
+          <text class="menu-title">消息通知</text>
+          <text class="menu-desc">查看系统通知</text>
+        </view>
+        <view class="menu-badge" wx:if="{{unreadCount > 0}}">{{unreadCount}}</view>
+        <image class="arrow-icon" src="/images/arrow-right.png" mode="aspectFit"></image>
+      </view>
+
       <view class="menu-item" bindtap="goToMemberCenter">
         <view class="menu-icon-wrapper">
           <image class="menu-icon" src="/images/menu-member.png" mode="aspectFit"></image>

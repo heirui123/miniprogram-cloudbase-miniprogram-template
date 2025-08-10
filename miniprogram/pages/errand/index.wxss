@@ -82,8 +82,9 @@
   background: #FFFFFF;
   padding: 20rpx;
   display: flex;
-  gap: 30rpx;
+  gap: 20rpx;
   border-bottom: 1rpx solid #E9ECEF;
+  overflow-x: auto;
 }
 
 .sort-item {
@@ -92,6 +93,7 @@
   padding: 8rpx 16rpx;
   border-radius: 16rpx;
   background: #F8F9FA;
+  flex-shrink: 0;
 }
 
 .sort-item.active {
@@ -99,7 +101,7 @@
 }
 
 .sort-text {
-  font-size: 26rpx;
+  font-size: 24rpx;
   color: #2C3E50;
 }
 
@@ -186,29 +188,34 @@
 
 .task-meta {
   display: flex;
-  justify-content: space-between;
-  align-items: center;
+  flex-direction: column;
+  gap: 8rpx;
 }
 
-.task-location {
+.task-location, .task-time, .task-deadline {
   display: flex;
   align-items: center;
+  font-size: 22rpx;
+  color: #7F8C8D;
 }
 
-.location-icon {
+.location-icon, .time-icon, .deadline-icon {
   width: 24rpx;
   height: 24rpx;
   margin-right: 8rpx;
 }
 
-.location-text {
+.location-text, .time-text, .deadline-text {
   font-size: 22rpx;
   color: #7F8C8D;
 }
 
-.task-time {
-  font-size: 22rpx;
-  color: #7F8C8D;
+.task-deadline {
+  color: #FF6B6B;
+}
+
+.task-deadline .deadline-text {
+  color: #FF6B6B;
 }
 
 .task-price {
@@ -271,6 +278,69 @@
 .task-actions .btn {
   font-size: 22rpx;
   padding: 8rpx 16rpx;
+}
+
+/* 空状态 */
+.empty-state {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 100rpx 40rpx;
+  background: white;
+  border-radius: 16rpx;
+  margin: 20rpx;
+  box-shadow: 0 2rpx 8rpx rgba(0, 0, 0, 0.1);
+}
+
+.empty-image {
+  width: 200rpx;
+  height: 200rpx;
+  margin-bottom: 30rpx;
+  opacity: 0.6;
+}
+
+.empty-text {
+  font-size: 28rpx;
+  color: #2C3E50;
+  margin-bottom: 10rpx;
+}
+
+.empty-subtext {
+  font-size: 24rpx;
+  color: #7F8C8D;
+}
+
+/* 加载状态 */
+.loading-state {
+  display: flex;
+  justify-content: center;
+  padding: 40rpx;
+  background: white;
+  border-radius: 16rpx;
+  margin: 20rpx;
+  box-shadow: 0 2rpx 8rpx rgba(0, 0, 0, 0.1);
+}
+
+.loading-text {
+  font-size: 28rpx;
+  color: #7F8C8D;
+}
+
+/* 加载完成 */
+.load-more {
+  display: flex;
+  justify-content: center;
+  padding: 40rpx;
+  background: white;
+  border-radius: 16rpx;
+  margin: 20rpx;
+  box-shadow: 0 2rpx 8rpx rgba(0, 0, 0, 0.1);
+}
+
+.load-more-text {
+  font-size: 26rpx;
+  color: #7F8C8D;
 }
 
 /* 发布按钮 */

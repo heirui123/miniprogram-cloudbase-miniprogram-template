@@ -1,24 +1,48 @@
 <view class="container">
   <!-- 服务图片轮播 -->
-  <swiper class="service-images" indicator-dots="{{true}}" autoplay="{{false}}">
+  <swiper class="service-images" indicator-dots="{{true}}" autoplay="{{false}}" circular="{{true}}">
     <swiper-item wx:for="{{service.images}}" wx:key="*this">
-      <image class="service-image" src="{{item}}" mode="aspectFill"></image>
+      <image class="service-image" src="{{item}}" mode="aspectFill" bindtap="previewImage" data-url="{{item}}"></image>
+    </swiper-item>
+    <swiper-item wx:if="{{service.images.length === 0}}">
+      <image class="service-image" src="/images/default-service.png" mode="aspectFill"></image>
     </swiper-item>
   </swiper>
 
   <!-- 服务基本信息 -->
   <view class="service-info card">
-          <view class="service-header">
-        <view class="service-title">{{service.title}}</view>
-        <view class="service-status status-{{service.statusClass}}">{{service.statusText}}</view>
-      </view>
+    <view class="service-header">
+      <view class="service-title">{{service.title}}</view>
+      <view class="service-status status-{{service.statusClass}}">{{service.statusText}}</view>
+    </view>
     <view class="service-price">
       <text class="price-symbol">¥</text>
       <text class="price-value">{{service.price}}</text>
+      <text class="price-unit" wx:if="{{service.priceUnit}}">{{service.priceUnit}}</text>
     </view>
     <view class="service-desc">{{service.description}}</view>
     <view class="service-tags">
       <view class="tag tag-primary" wx:for="{{service.tags}}" wx:key="*this">{{item}}</view>
+    </view>
+    
+    <!-- 服务统计信息 -->
+    <view class="service-stats" wx:if="{{serviceStats}}">
+      <view class="stat-item">
+        <text class="stat-value">{{serviceStats.viewCount || 0}}</text>
+        <text class="stat-label">浏览</text>
+      </view>
+      <view class="stat-item">
+        <text class="stat-value">{{serviceStats.orderCount || 0}}</text>
+        <text class="stat-label">接单</text>
+      </view>
+      <view class="stat-item">
+        <text class="stat-value">{{serviceStats.reviewCount || 0}}</text>
+        <text class="stat-label">评价</text>
+      </view>
+      <view class="stat-item">
+        <text class="stat-value">{{serviceStats.avgRating || 0}}</text>
+        <text class="stat-label">评分</text>
+      </view>
     </view>
   </view>
 
@@ -26,7 +50,7 @@
   <view class="publisher-info card">
     <view class="section-title">发布者信息</view>
     <view class="publisher-content">
-      <image class="publisher-avatar" src="{{service.publisher.avatarUrl || '/images/default-avatar.png'}}" mode="aspectFill"></image>
+      <image class="publisher-avatar" src="{{service.publisher.avatarUrl || '/images/default-avatar.png'}}" mode="aspectFill" bindtap="viewPublisherProfile"></image>
       <view class="publisher-details">
         <view class="publisher-name">{{service.publisher.nickName}}</view>
         <view class="publisher-meta">
@@ -36,10 +60,14 @@
           </view>
           <view class="member-level">{{service.publisher.memberLevel || '普通用户'}}</view>
         </view>
+        <view class="publisher-stats">
+          <text class="publisher-stat">发布 {{service.publisher.serviceCount || 0}} 个服务</text>
+          <text class="publisher-stat">完成 {{service.publisher.completedCount || 0}} 个订单</text>
+        </view>
       </view>
       <view class="contact-btns">
-        <button class="btn btn-outline btn-small" bindtap="makeCall">拨打电话</button>
-        <button class="btn btn-primary btn-small" bindtap="addWechat">添加微信</button>
+        <button class="btn btn-outline btn-small" bindtap="makeCall" wx:if="{{service.contactInfo.phone}}">拨打电话</button>
+        <button class="btn btn-primary btn-small" bindtap="addWechat" wx:if="{{service.contactInfo.wechat}}">添加微信</button>
       </view>
     </view>
   </view>
@@ -59,15 +87,58 @@
       <text class="detail-label">发布时间：</text>
       <text class="detail-value">{{service.createTimeText}}</text>
     </view>
-    <view class="detail-item" wx:if="{{service.contactInfo}}">
-      <text class="detail-label">联系方式：</text>
-      <text class="detail-value">{{service.contactInfo.phone || service.contactInfo.wechat}}</text>
+    <view class="detail-item" wx:if="{{service.contactInfo.phone}}">
+      <text class="detail-label">联系电话：</text>
+      <text class="detail-value">{{service.contactInfo.phone}}</text>
+    </view>
+    <view class="detail-item" wx:if="{{service.contactInfo.wechat}}">
+      <text class="detail-label">微信号：</text>
+      <text class="detail-value">{{service.contactInfo.wechat}}</text>
+    </view>
+    <view class="detail-item" wx:if="{{service.requirements}}">
+      <text class="detail-label">服务要求：</text>
+      <text class="detail-value">{{service.requirements}}</text>
+    </view>
+    <view class="detail-item" wx:if="{{service.validTime}}">
+      <text class="detail-label">有效期至：</text>
+      <text class="detail-value">{{service.validTimeText}}</text>
+    </view>
+  </view>
+
+  <!-- 评价统计 -->
+  <view class="review-stats card" wx:if="{{reviewStats}}">
+    <view class="section-title">评价统计</view>
+    <view class="review-overview">
+      <view class="overall-rating">
+        <view class="rating-score">{{reviewStats.avgRating || 0}}</view>
+        <view class="rating-stars">
+          <text class="star" wx:for="{{5}}" wx:key="*this" wx:for-item="star" wx:for-index="index">
+            {{index < Math.floor(reviewStats.avgRating || 0) ? '★' : '☆'}}
+          </text>
+        </view>
+        <view class="rating-count">{{reviewStats.totalCount || 0}} 条评价</view>
+      </view>
+      <view class="rating-distribution">
+        <view class="rating-bar" wx:for="{{reviewStats.distribution}}" wx:key="rating">
+          <text class="rating-label">{{item.rating}}星</text>
+          <view class="rating-progress">
+            <view class="progress-bar" style="width: {{item.percentage}}%"></view>
+          </view>
+          <text class="rating-percentage">{{item.percentage}}%</text>
+        </view>
+      </view>
     </view>
   </view>
 
   <!-- 评价列表 -->
   <view class="reviews-section card" wx:if="{{reviews.length > 0}}">
-    <view class="section-title">用户评价</view>
+    <view class="section-header">
+      <view class="section-title">用户评价</view>
+      <view class="review-filter" bindtap="showReviewFilter">
+        <text>筛选</text>
+        <image class="filter-icon" src="/images/filter.png" mode="aspectFit"></image>
+      </view>
+    </view>
     <view class="review-item" wx:for="{{reviews}}" wx:key="_id">
       <view class="review-header">
         <image class="reviewer-avatar" src="{{item.reviewer.avatarUrl || '/images/default-avatar.png'}}" mode="aspectFill"></image>
@@ -80,15 +151,58 @@
         <view class="review-time">{{item.createTimeText}}</view>
       </view>
       <view class="review-content">{{item.content}}</view>
+      <view class="review-tags" wx:if="{{item.tags.length > 0}}">
+        <view class="review-tag" wx:for="{{item.tags}}" wx:key="*this" wx:for-item="tag">{{tag}}</view>
+      </view>
       <view class="review-images" wx:if="{{item.images.length > 0}}">
-        <image class="review-image" wx:for="{{item.images}}" wx:key="*this" wx:for-item="img" src="{{img}}" mode="aspectFill"></image>
+        <image class="review-image" wx:for="{{item.images}}" wx:key="*this" wx:for-item="img" src="{{img}}" mode="aspectFill" bindtap="previewImage" data-url="{{img}}"></image>
+      </view>
+      <view class="review-actions">
+        <view class="action-item" bindtap="likeReview" data-id="{{item._id}}">
+          <image class="action-icon" src="{{item.isLiked ? '/images/like-filled.png' : '/images/like.png'}}" mode="aspectFit"></image>
+          <text class="action-text">{{item.likeCount || 0}}</text>
+        </view>
+        <view class="action-item" bindtap="replyReview" data-id="{{item._id}}">
+          <image class="action-icon" src="/images/reply.png" mode="aspectFit"></image>
+          <text class="action-text">回复</text>
+        </view>
+      </view>
+    </view>
+    
+    <!-- 加载更多评价 -->
+    <view class="load-more" wx:if="{{hasMoreReviews}}" bindtap="loadMoreReviews">
+      <text>加载更多评价</text>
+    </view>
+  </view>
+
+  <!-- 相关推荐 -->
+  <view class="related-services card" wx:if="{{relatedServices.length > 0}}">
+    <view class="section-title">相关推荐</view>
+    <view class="service-list">
+      <view class="service-card" wx:for="{{relatedServices}}" wx:key="_id" bindtap="goToServiceDetail" data-id="{{item._id}}">
+        <image class="service-thumb" src="{{item.images[0] || '/images/default-service.png'}}" mode="aspectFill"></image>
+        <view class="service-info-mini">
+          <view class="service-title-mini">{{item.title}}</view>
+          <view class="service-price-mini">¥{{item.price}}</view>
+        </view>
       </view>
     </view>
   </view>
 
   <!-- 操作按钮 -->
   <view class="action-buttons">
-    <button class="btn btn-outline" bindtap="shareService">分享服务</button>
+    <button class="btn btn-outline" bindtap="shareService">
+      <image class="btn-icon" src="/images/share.png" mode="aspectFit"></image>
+      分享
+    </button>
+    <button class="btn btn-outline" bindtap="collectService" wx:if="{{!isCollected}}">
+      <image class="btn-icon" src="/images/collect.png" mode="aspectFit"></image>
+      收藏
+    </button>
+    <button class="btn btn-outline" bindtap="uncollectService" wx:if="{{isCollected}}">
+      <image class="btn-icon" src="/images/collected.png" mode="aspectFit"></image>
+      已收藏
+    </button>
     <button class="btn btn-primary" bindtap="createOrder" wx:if="{{service.status === '发布中'}}">立即接单</button>
     <button class="btn btn-secondary" bindtap="contactPublisher" wx:if="{{service.status === '发布中'}}">联系发布者</button>
   </view>

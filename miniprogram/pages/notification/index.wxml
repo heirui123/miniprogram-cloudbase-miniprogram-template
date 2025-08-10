@@ -1,0 +1,61 @@
+<view class="container">
+  <!-- 页面头部 -->
+  <view class="header">
+    <text class="title">消息通知</text>
+    <view class="header-actions">
+      <button class="btn btn-outline btn-small" bindtap="markAllAsRead">全部已读</button>
+    </view>
+  </view>
+
+  <!-- 通知列表 -->
+  <view class="notification-list">
+    <view class="notification-item {{item.isRead ? 'read' : 'unread'}}" 
+          wx:for="{{notificationList}}" wx:key="_id" 
+          bindtap="onNotificationTap" data-item="{{item}}">
+      
+      <view class="notification-icon">
+        <text class="icon">{{getNotificationIcon(item.type)}}</text>
+        <view class="unread-dot" wx:if="{{!item.isRead}}"></view>
+      </view>
+      
+      <view class="notification-content">
+        <view class="notification-header">
+          <text class="notification-title">{{item.title}}</text>
+          <text class="notification-time">{{item.createTimeText}}</text>
+        </view>
+        
+        <view class="notification-body">
+          <text class="notification-text">{{item.content}}</text>
+        </view>
+        
+        <view class="notification-footer" wx:if="{{item.data.serviceTitle}}">
+          <text class="service-info">相关服务：{{item.data.serviceTitle}}</text>
+        </view>
+      </view>
+      
+      <view class="notification-actions">
+        <button class="btn btn-small btn-outline" 
+                bindtap="deleteNotification" data-id="{{item._id}}">
+          删除
+        </button>
+      </view>
+    </view>
+  </view>
+
+  <!-- 空状态 -->
+  <view class="empty-state" wx:if="{{notificationList.length === 0 && !loading}}">
+    <image class="empty-image" src="/images/empty-notification.png" mode="aspectFit"></image>
+    <text class="empty-text">暂无消息通知</text>
+    <text class="empty-subtext">有新的消息时会在这里显示</text>
+  </view>
+
+  <!-- 加载状态 -->
+  <view class="loading-state" wx:if="{{loading}}">
+    <text class="loading-text">加载中...</text>
+  </view>
+
+  <!-- 加载完成 -->
+  <view class="load-more" wx:if="{{!hasMore && notificationList.length > 0}}">
+    <text class="load-more-text">没有更多通知了</text>
+  </view>
+</view> 

@@ -1,0 +1,372 @@
+/* payment-test/index.wxss */
+
+.container {
+  padding: 20rpx;
+  background: #F8F9FA;
+  min-height: 100vh;
+}
+
+/* 页面标题 */
+.header {
+  text-align: center;
+  margin-bottom: 40rpx;
+}
+
+.title {
+  font-size: 36rpx;
+  font-weight: bold;
+  color: #2C3E50;
+  margin-bottom: 10rpx;
+}
+
+.subtitle {
+  font-size: 26rpx;
+  color: #7F8C8D;
+}
+
+/* 测试状态 */
+.test-status {
+  margin-bottom: 30rpx;
+}
+
+.status-card {
+  background: #FFFFFF;
+  border-radius: 16rpx;
+  padding: 30rpx;
+  display: flex;
+  align-items: center;
+  box-shadow: 0 2rpx 8rpx rgba(0, 0, 0, 0.1);
+}
+
+.status-icon {
+  width: 80rpx;
+  height: 80rpx;
+  border-radius: 50%;
+  background: rgba(69, 183, 209, 0.1);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-right: 20rpx;
+}
+
+.icon {
+  font-size: 40rpx;
+}
+
+.status-info {
+  flex: 1;
+}
+
+.status-title {
+  font-size: 32rpx;
+  font-weight: bold;
+  color: #2C3E50;
+  margin-bottom: 8rpx;
+}
+
+.status-desc {
+  font-size: 26rpx;
+  color: #7F8C8D;
+  margin-bottom: 15rpx;
+}
+
+.progress-bar {
+  width: 100%;
+  height: 8rpx;
+  background: #E9ECEF;
+  border-radius: 4rpx;
+  overflow: hidden;
+  margin-bottom: 8rpx;
+}
+
+.progress-fill {
+  height: 100%;
+  background: linear-gradient(90deg, #4ECDC4, #45B7D1);
+  border-radius: 4rpx;
+  transition: width 0.3s ease;
+}
+
+.progress-text {
+  font-size: 24rpx;
+  color: #7F8C8D;
+  text-align: right;
+}
+
+/* 测试报告 */
+.test-report {
+  margin-bottom: 30rpx;
+}
+
+.report-card {
+  background: #FFFFFF;
+  border-radius: 16rpx;
+  padding: 30rpx;
+  box-shadow: 0 2rpx 8rpx rgba(0, 0, 0, 0.1);
+}
+
+.report-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20rpx;
+}
+
+.report-title {
+  font-size: 32rpx;
+  font-weight: bold;
+  color: #2C3E50;
+}
+
+.report-time {
+  font-size: 24rpx;
+  color: #7F8C8D;
+}
+
+.report-summary {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 20rpx;
+  margin-bottom: 30rpx;
+}
+
+.summary-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 15rpx;
+  background: #F8F9FA;
+  border-radius: 12rpx;
+}
+
+.summary-label {
+  font-size: 26rpx;
+  color: #7F8C8D;
+}
+
+.summary-value {
+  font-size: 28rpx;
+  font-weight: bold;
+  color: #2C3E50;
+}
+
+.summary-value.success {
+  color: #4CAF50;
+}
+
+.summary-value.error {
+  color: #FF5722;
+}
+
+.report-details {
+  margin-bottom: 30rpx;
+}
+
+.details-title {
+  font-size: 28rpx;
+  font-weight: bold;
+  color: #2C3E50;
+  margin-bottom: 15rpx;
+}
+
+.result-list {
+  display: flex;
+  flex-direction: column;
+  gap: 15rpx;
+}
+
+.result-item {
+  display: flex;
+  align-items: flex-start;
+  padding: 15rpx;
+  border-radius: 12rpx;
+  background: #F8F9FA;
+}
+
+.result-item.success {
+  background: rgba(76, 175, 80, 0.1);
+}
+
+.result-item.error {
+  background: rgba(255, 87, 34, 0.1);
+}
+
+.result-status {
+  font-size: 24rpx;
+  margin-right: 15rpx;
+  margin-top: 4rpx;
+}
+
+.result-info {
+  flex: 1;
+}
+
+.result-name {
+  font-size: 26rpx;
+  font-weight: 500;
+  color: #2C3E50;
+  margin-bottom: 5rpx;
+  display: block;
+}
+
+.result-message {
+  font-size: 24rpx;
+  color: #7F8C8D;
+  display: block;
+}
+
+.report-actions {
+  display: flex;
+  gap: 15rpx;
+}
+
+/* 测试操作 */
+.test-actions {
+  margin-bottom: 30rpx;
+}
+
+.action-section {
+  background: #FFFFFF;
+  border-radius: 16rpx;
+  padding: 30rpx;
+  margin-bottom: 20rpx;
+  box-shadow: 0 2rpx 8rpx rgba(0, 0, 0, 0.1);
+}
+
+.section-title {
+  font-size: 28rpx;
+  font-weight: bold;
+  color: #2C3E50;
+  margin-bottom: 20rpx;
+}
+
+.action-buttons {
+  display: flex;
+  gap: 15rpx;
+  flex-wrap: wrap;
+}
+
+.btn {
+  flex: 1;
+  min-width: 200rpx;
+  padding: 20rpx 30rpx;
+  border-radius: 12rpx;
+  font-size: 28rpx;
+  border: none;
+  text-align: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.btn:disabled {
+  opacity: 0.6;
+}
+
+.btn-primary {
+  background: #FF6B6B;
+  color: #FFFFFF;
+}
+
+.btn-secondary {
+  background: #4ECDC4;
+  color: #FFFFFF;
+}
+
+.btn-outline {
+  background: transparent;
+  color: #7F8C8D;
+  border: 1rpx solid #E9ECEF;
+}
+
+.btn-danger {
+  background: #FF5722;
+  color: #FFFFFF;
+}
+
+/* 测试说明 */
+.test-info {
+  margin-bottom: 30rpx;
+}
+
+.info-card {
+  background: #FFFFFF;
+  border-radius: 16rpx;
+  padding: 30rpx;
+  box-shadow: 0 2rpx 8rpx rgba(0, 0, 0, 0.1);
+}
+
+.info-title {
+  font-size: 28rpx;
+  font-weight: bold;
+  color: #2C3E50;
+  margin-bottom: 20rpx;
+}
+
+.info-content {
+  display: flex;
+  flex-direction: column;
+  gap: 15rpx;
+}
+
+.info-item {
+  display: flex;
+  align-items: flex-start;
+}
+
+.info-label {
+  font-size: 26rpx;
+  color: #2C3E50;
+  font-weight: 500;
+  flex-shrink: 0;
+  margin-right: 10rpx;
+}
+
+.info-text {
+  font-size: 26rpx;
+  color: #7F8C8D;
+  line-height: 1.4;
+}
+
+/* 实时测试结果 */
+.real-time-results {
+  margin-bottom: 30rpx;
+}
+
+.results-card {
+  background: #FFFFFF;
+  border-radius: 16rpx;
+  padding: 30rpx;
+  box-shadow: 0 2rpx 8rpx rgba(0, 0, 0, 0.1);
+}
+
+.results-title {
+  font-size: 28rpx;
+  font-weight: bold;
+  color: #2C3E50;
+  margin-bottom: 20rpx;
+}
+
+.results-list {
+  display: flex;
+  flex-direction: column;
+  gap: 15rpx;
+}
+
+/* 响应式设计 */
+@media (max-width: 750rpx) {
+  .report-summary {
+    grid-template-columns: 1fr;
+  }
+  
+  .action-buttons {
+    flex-direction: column;
+  }
+  
+  .btn {
+    min-width: auto;
+  }
+  
+  .report-actions {
+    flex-direction: column;
+  }
+} 
