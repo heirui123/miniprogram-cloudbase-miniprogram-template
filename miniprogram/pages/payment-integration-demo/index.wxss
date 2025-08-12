@@ -1,0 +1,272 @@
+/* payment-integration-demo/index.wxss */
+
+.container {
+  padding: 20rpx;
+  background: var(--background-color);
+}
+
+.header {
+  text-align: center;
+  margin-bottom: 40rpx;
+}
+
+.title {
+  font-size: 36rpx;
+  font-weight: bold;
+  color: var(--text-color);
+  margin-bottom: 10rpx;
+}
+
+.subtitle {
+  font-size: 28rpx;
+  color: var(--text-secondary);
+}
+
+.section {
+  background: var(--card-color);
+  border-radius: 16rpx;
+  padding: 30rpx;
+  margin-bottom: 30rpx;
+}
+
+.section-title {
+  font-size: 32rpx;
+  font-weight: bold;
+  color: var(--text-color);
+  margin-bottom: 20rpx;
+}
+
+.section-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20rpx;
+}
+
+/* 服务列表 */
+.service-list {
+  margin-bottom: 30rpx;
+}
+
+.service-item {
+  display: flex;
+  align-items: center;
+  padding: 20rpx;
+  border: 2rpx solid var(--border-color);
+  border-radius: 12rpx;
+  margin-bottom: 20rpx;
+  position: relative;
+  transition: all 0.3s ease;
+}
+
+.service-item.selected {
+  border-color: var(--primary-color);
+  background: rgba(64, 158, 255, 0.1);
+}
+
+.service-image {
+  width: 120rpx;
+  height: 120rpx;
+  border-radius: 8rpx;
+  margin-right: 20rpx;
+}
+
+.service-info {
+  flex: 1;
+}
+
+.service-title {
+  font-size: 30rpx;
+  font-weight: bold;
+  color: var(--text-color);
+  margin-bottom: 8rpx;
+}
+
+.service-desc {
+  font-size: 26rpx;
+  color: var(--text-secondary);
+  margin-bottom: 8rpx;
+}
+
+.service-price {
+  font-size: 32rpx;
+  font-weight: bold;
+  color: var(--primary-color);
+}
+
+.select-icon {
+  position: absolute;
+  right: 20rpx;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 40rpx;
+  height: 40rpx;
+  background: var(--primary-color);
+  color: white;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 24rpx;
+}
+
+/* 自定义支付 */
+.custom-payment {
+  display: flex;
+  align-items: center;
+  gap: 20rpx;
+}
+
+.amount-input {
+  flex: 1;
+  height: 80rpx;
+  border: 2rpx solid var(--border-color);
+  border-radius: 8rpx;
+  padding: 0 20rpx;
+  font-size: 28rpx;
+  background: var(--background-color);
+}
+
+/* 支付历史 */
+.payment-history {
+  max-height: 400rpx;
+  overflow-y: auto;
+}
+
+.history-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 20rpx 0;
+  border-bottom: 1rpx solid var(--border-color);
+}
+
+.history-item:last-child {
+  border-bottom: none;
+}
+
+.history-info {
+  flex: 1;
+}
+
+.history-title {
+  font-size: 28rpx;
+  color: var(--text-color);
+  margin-bottom: 8rpx;
+}
+
+.history-time {
+  font-size: 24rpx;
+  color: var(--text-secondary);
+}
+
+.history-amount {
+  font-size: 30rpx;
+  font-weight: bold;
+  color: var(--primary-color);
+}
+
+.empty-history {
+  text-align: center;
+  color: var(--text-secondary);
+  font-size: 28rpx;
+  padding: 40rpx 0;
+}
+
+/* 代码示例 */
+.code-example {
+  background: #f5f5f5;
+  border-radius: 8rpx;
+  padding: 20rpx;
+  max-height: 600rpx;
+  overflow-y: auto;
+}
+
+.code-text {
+  font-family: 'Courier New', monospace;
+  font-size: 24rpx;
+  color: #333;
+  line-height: 1.5;
+  white-space: pre-wrap;
+}
+
+/* 使用说明 */
+.usage-guide {
+  display: flex;
+  flex-direction: column;
+  gap: 20rpx;
+}
+
+.guide-item {
+  padding: 20rpx;
+  background: var(--background-color);
+  border-radius: 8rpx;
+}
+
+.guide-title {
+  font-size: 28rpx;
+  font-weight: bold;
+  color: var(--text-color);
+  margin-bottom: 8rpx;
+}
+
+.guide-desc {
+  font-size: 26rpx;
+  color: var(--text-secondary);
+  line-height: 1.4;
+}
+
+/* 按钮样式 */
+.btn {
+  border: none;
+  border-radius: 8rpx;
+  padding: 20rpx 40rpx;
+  font-size: 28rpx;
+  font-weight: bold;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.btn-primary {
+  background: var(--primary-color);
+  color: white;
+}
+
+.btn-primary:active {
+  background: var(--primary-dark);
+}
+
+.btn-primary:disabled {
+  background: var(--disabled-color);
+  color: var(--text-secondary);
+}
+
+.btn-secondary {
+  background: var(--secondary-color);
+  color: white;
+}
+
+.btn-secondary:active {
+  background: var(--secondary-dark);
+}
+
+.btn-secondary:disabled {
+  background: var(--disabled-color);
+  color: var(--text-secondary);
+}
+
+.btn-outline {
+  background: transparent;
+  color: var(--primary-color);
+  border: 2rpx solid var(--primary-color);
+}
+
+.btn-outline:active {
+  background: var(--primary-color);
+  color: white;
+}
+
+.btn-small {
+  padding: 10rpx 20rpx;
+  font-size: 24rpx;
+} 

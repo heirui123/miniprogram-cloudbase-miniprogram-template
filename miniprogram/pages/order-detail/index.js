@@ -1,5 +1,6 @@
 // order-detail/index.js
 const app = getApp()
+const PaymentUtil = require('../../utils/payment.js')
 
 Page({
   data: {
@@ -254,13 +255,12 @@ Page({
       return
     }
 
-    wx.showModal({
-      title: '确认支付',
-      content: `确定要支付 ¥${this.data.order.price} 吗？`,
-      success: (res) => {
-        if (res.confirm) {
-          this.createPayment()
-        }
+    // 使用支付工具类显示确认弹窗
+    PaymentUtil.showPaymentConfirm({
+      amount: this.data.order.price,
+      title: this.data.order.service.title,
+      onConfirm: () => {
+        this.createPayment()
       }
     })
   },
@@ -312,61 +312,27 @@ Page({
 
   // 创建支付
   createPayment: function() {
-    wx.showLoading({
-      title: '创建支付...'
-    })
-
-    wx.cloud.callFunction({
-      name: 'order',
-      data: {
-        action: 'createPayment',
-        orderId: this.data.orderId,
-        paymentData: {}
+    // 使用支付工具类发起支付
+    PaymentUtil.payOrder(this.data.order, 
+      // 支付成功回调
+      (res) => {
+        // 支付成功后更新订单状态
+        this.updateOrderPaymentStatus()
+      },
+      // 支付失败回调
+      (err) => {
+        console.error('支付失败:', err)
       }
-    }).then(res => {
-      if (res.result.success) {
-        // 调用微信支付
-        this.requestPayment(res.result.data)
-      } else {
-        wx.showToast({
-          title: res.result.message || '创建支付失败',
-          icon: 'none'
-        })
-      }
-    }).catch(err => {
-      console.error('创建支付失败:', err)
-      wx.showToast({
-        title: '创建支付失败',
-        icon: 'none'
-      })
-    }).finally(() => {
-      wx.hideLoading()
-    })
+    )
   },
 
-  // 请求支付
-  requestPayment: function(paymentData) {
-    wx.requestPayment({
-      timeStamp: paymentData.timeStamp,
-      nonceStr: paymentData.nonceStr,
-      package: paymentData.package,
-      signType: paymentData.signType,
-      paySign: paymentData.paySign,
-      success: (res) => {
-        console.log('支付成功:', res)
-        wx.showToast({
-          title: '支付成功',
-          icon: 'success'
-        })
+  // 更新订单支付状态
+  updateOrderPaymentStatus: function() {
+    // 使用支付工具类更新订单状态
+    PaymentUtil.updateOrderPaymentStatus(this.data.orderId).then(success => {
+      if (success) {
         // 刷新订单详情
         this.loadOrderDetail()
-      },
-      fail: (err) => {
-        console.error('支付失败:', err)
-        wx.showToast({
-          title: '支付失败',
-          icon: 'none'
-        })
       }
     })
   },

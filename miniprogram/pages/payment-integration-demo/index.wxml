@@ -1,0 +1,145 @@
+<!-- payment-integration-demo/index.wxml -->
+<view class="container">
+  <view class="header">
+    <view class="title">支付功能集成示例</view>
+    <view class="subtitle">展示如何在业务页面中集成支付功能</view>
+  </view>
+
+  <!-- 服务选择区域 -->
+  <view class="section">
+    <view class="section-title">选择服务进行支付</view>
+    <view class="service-list">
+      <view class="service-item {{selectedService.id === item.id ? 'selected' : ''}}" 
+            wx:for="{{demoServices}}" 
+            wx:key="id"
+            bindtap="selectService"
+            data-id="{{item.id}}">
+        <image class="service-image" src="{{item.image}}" mode="aspectFill"></image>
+        <view class="service-info">
+          <view class="service-title">{{item.title}}</view>
+          <view class="service-desc">{{item.description}}</view>
+          <view class="service-price">¥{{item.price}}</view>
+        </view>
+        <view class="select-icon" wx:if="{{selectedService.id === item.id}}">✓</view>
+      </view>
+    </view>
+    
+    <button class="btn btn-primary" 
+            bindtap="paySelectedService"
+            disabled="{{!selectedService}}">
+      支付选中服务
+    </button>
+  </view>
+
+  <!-- 自定义金额支付 -->
+  <view class="section">
+    <view class="section-title">自定义金额支付</view>
+    <view class="custom-payment">
+      <input class="amount-input" 
+             type="digit" 
+             placeholder="请输入支付金额"
+             value="{{customAmount}}"
+             bindinput="onAmountInput" />
+      <button class="btn btn-secondary" 
+              bindtap="payCustomAmount"
+              disabled="{{!customAmount}}">
+        支付
+      </button>
+    </view>
+  </view>
+
+  <!-- 支付历史 -->
+  <view class="section">
+    <view class="section-header">
+      <view class="section-title">支付历史</view>
+      <button class="btn btn-outline btn-small" bindtap="clearPaymentHistory">清空</button>
+    </view>
+    <view class="payment-history">
+      <view class="history-item" wx:for="{{paymentHistory}}" wx:key="time">
+        <view class="history-info">
+          <view class="history-title">{{item.title}}</view>
+          <view class="history-time">{{item.time}}</view>
+        </view>
+        <view class="history-amount">¥{{item.amount}}</view>
+      </view>
+      <view class="empty-history" wx:if="{{paymentHistory.length === 0}}">
+        暂无支付记录
+      </view>
+    </view>
+  </view>
+
+  <!-- 代码示例 -->
+  <view class="section">
+    <view class="section-header">
+      <view class="section-title">集成代码示例</view>
+      <button class="btn btn-outline btn-small" bindtap="copyCodeExample">复制代码</button>
+    </view>
+    <view class="code-example">
+      <text class="code-text">
+// 支付工具类使用示例
+const PaymentUtil = require('../../utils/payment.js')
+
+// 1. 支付订单
+PaymentUtil.payOrder(order, 
+  (res) => {
+    // 支付成功回调
+    console.log('支付成功:', res)
+  },
+  (err) => {
+    // 支付失败回调
+    console.error('支付失败:', err)
+  }
+)
+
+// 2. 支付服务
+PaymentUtil.payService(service,
+  (res) => {
+    // 支付成功回调
+    console.log('支付成功:', res)
+  },
+  (err) => {
+    // 支付失败回调
+    console.error('支付失败:', err)
+  }
+)
+
+// 3. 自定义支付
+PaymentUtil.pay({
+  orderId: 'ORDER_123',
+  amount: 100,
+  title: '商品标题',
+  description: '商品描述',
+  onSuccess: (res) => {
+    // 支付成功回调
+  },
+  onFail: (err) => {
+    // 支付失败回调
+  }
+})
+      </text>
+    </view>
+  </view>
+
+  <!-- 使用说明 -->
+  <view class="section">
+    <view class="section-title">使用说明</view>
+    <view class="usage-guide">
+      <view class="guide-item">
+        <view class="guide-title">1. 引入支付工具类</view>
+        <view class="guide-desc">在页面JS文件中引入 PaymentUtil</view>
+      </view>
+      <view class="guide-item">
+        <view class="guide-title">2. 调用支付方法</view>
+        <view class="guide-desc">根据业务需求选择合适的支付方法</view>
+      </view>
+      <view class="guide-item">
+        <view class="guide-title">3. 处理支付结果</view>
+        <view class="guide-desc">在回调函数中处理支付成功或失败的情况</view>
+      </view>
+      <view class="guide-item">
+        <view class="guide-title">4. 更新业务状态</view>
+        <view class="guide-desc">支付成功后更新订单状态或业务数据</view>
+      </view>
+    </view>
+  </view>
+</view> 

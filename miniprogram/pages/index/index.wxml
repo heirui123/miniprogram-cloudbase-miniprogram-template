@@ -57,6 +57,17 @@
     </view>
   </view>
 
+  <!-- 支付测试入口 -->
+  <view class="payment-test-section">
+    <view class="section-header">
+      <view class="section-title">功能测试</view>
+    </view>
+    <view class="test-actions">
+      <button class="test-btn" bindtap="goToPaymentTest">支付功能测试</button>
+      <button class="test-btn" bindtap="goToPaymentIntegrationDemo">集成示例</button>
+    </view>
+  </view>
+
   <!-- 最新服务 -->
   <view class="latest-section">
     <view class="section-header">

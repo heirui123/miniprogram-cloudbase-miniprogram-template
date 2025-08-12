@@ -67,6 +67,38 @@
   color: #7F8C8D;
 }
 
+/* 接自己单的特殊提示 */
+.own-service-notice {
+  background: rgba(255, 193, 7, 0.1);
+  border: 2rpx solid rgba(255, 193, 7, 0.3);
+  border-radius: 12rpx;
+  padding: 20rpx;
+  margin-top: 20rpx;
+  display: flex;
+  align-items: center;
+}
+
+.notice-icon {
+  font-size: 32rpx;
+  margin-right: 16rpx;
+}
+
+.notice-content {
+  flex: 1;
+}
+
+.notice-title {
+  font-size: 28rpx;
+  font-weight: bold;
+  color: #F39C12;
+  margin-bottom: 4rpx;
+}
+
+.notice-desc {
+  font-size: 24rpx;
+  color: #E67E22;
+}
+
 /* 卡片通用样式 */
 .card {
   background: #FFFFFF;

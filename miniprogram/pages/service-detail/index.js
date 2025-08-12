@@ -345,18 +345,16 @@ Page({
   createOrder: function() {
     // 检查登录状态
     app.checkLogin().then(userInfo => {
-      // 检查是否是自己的服务
-      if (this.data.service.userId === userInfo._id) {
-        wx.showToast({
-          title: '不能接自己的单',
-          icon: 'none'
-        })
-        return
-      }
+      // 检查是否是自己的服务，如果是则显示特殊提示
+      const isOwnService = this.data.service.openid === userInfo.openid
+      const modalTitle = isOwnService ? '确认接自己的单' : '确认接单'
+      const modalContent = isOwnService ? 
+        '您确定要接自己发布的服务吗？' : 
+        '确定要接这个服务吗？'
 
       wx.showModal({
-        title: '确认接单',
-        content: '确定要接这个服务吗？',
+        title: modalTitle,
+        content: modalContent,
         success: (res) => {
           if (res.confirm) {
             this.submitOrder()
@@ -397,8 +395,27 @@ Page({
           title: '接单成功',
           icon: 'success'
         })
-        // 刷新服务状态
-        this.loadServiceDetail()
+        
+        // 接单成功后，询问是否立即支付
+        wx.showModal({
+          title: '接单成功',
+          content: `是否立即支付服务费用 ¥${this.data.service.price}？`,
+          confirmText: '立即支付',
+          cancelText: '稍后支付',
+          success: (modalRes) => {
+            if (modalRes.confirm) {
+              // 跳转到订单详情页面进行支付
+              wx.redirectTo({
+                url: `/pages/order-detail/index?id=${res.result.data._id}`
+              })
+            } else {
+              // 跳转到订单列表页面
+              wx.switchTab({
+                url: '/pages/order/index'
+              })
+            }
+          }
+        })
       } else {
         wx.showToast({
           title: res.result.message || '接单失败',

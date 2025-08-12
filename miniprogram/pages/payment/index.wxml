@@ -1,0 +1,75 @@
+<view class="payment-container">
+  <!-- 加载状态 -->
+  <loading wx:if="{{loading}}" />
+  
+  <!-- 支付结果 -->
+  <view wx:if="{{paymentResult}}" class="payment-result">
+    <view class="result-icon {{paymentResult.success ? 'success' : 'fail'}}">
+      <text class="iconfont {{paymentResult.success ? 'icon-success' : 'icon-fail'}}"></text>
+    </view>
+    <view class="result-title">{{paymentResult.message}}</view>
+    <view class="result-actions">
+      <button wx:if="{{!paymentResult.success}}" class="btn-retry" bindtap="handleRetry">重新支付</button>
+      <button class="btn-back" bindtap="handleCancel">返回</button>
+    </view>
+  </view>
+  
+  <!-- 支付表单 -->
+  <view wx:else class="payment-form">
+    <!-- 订单信息 -->
+    <view class="order-info">
+      <view class="info-title">订单信息</view>
+      <view class="info-item">
+        <text class="label">订单号：</text>
+        <text class="value">{{orderInfo._id || '--'}}</text>
+      </view>
+      <view class="info-item">
+        <text class="label">服务名称：</text>
+        <text class="value">{{orderInfo.service.title || '--'}}</text>
+      </view>
+      <view class="info-item">
+        <text class="label">服务描述：</text>
+        <text class="value">{{orderInfo.description || '--'}}</text>
+      </view>
+      <view class="info-item" wx:if="{{orderInfo.location.address}}">
+        <text class="label">服务地址：</text>
+        <text class="value">{{orderInfo.location.address || '--'}}</text>
+      </view>
+    </view>
+    
+    <!-- 支付金额 -->
+    <view class="payment-amount">
+      <view class="amount-title">支付金额</view>
+      <view class="amount-value">¥{{paymentAmount}}</view>
+    </view>
+    
+    <!-- 支付方式 -->
+    <view class="payment-method">
+      <view class="method-title">支付方式</view>
+      <view class="method-item">
+        <image class="method-icon" src="/images/wechat-pay.png" mode="aspectFit"></image>
+        <text class="method-name">微信支付</text>
+        <view class="method-selected">
+          <text class="iconfont icon-check"></text>
+        </view>
+      </view>
+    </view>
+    
+    <!-- 支付按钮 -->
+    <view class="payment-actions">
+      <button class="btn-pay" bindtap="handlePayment" disabled="{{loading}}">
+        <text wx:if="{{loading}}">处理中...</text>
+        <text wx:else>立即支付 ¥{{paymentAmount}}</text>
+      </button>
+      <button class="btn-cancel" bindtap="handleCancel">取消支付</button>
+    </view>
+    
+    <!-- 支付说明 -->
+    <view class="payment-notice">
+      <view class="notice-title">支付说明</view>
+      <view class="notice-item">• 支付成功后，服务提供者将收到通知</view>
+      <view class="notice-item">• 如遇问题，请联系客服处理</view>
+      <view class="notice-item">• 支付金额将安全托管，服务完成后结算</view>
+    </view>
+  </view>
+</view> 

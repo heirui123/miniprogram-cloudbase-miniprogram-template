@@ -11,6 +11,15 @@
         <view class="status-desc">{{order.statusDesc}}</view>
       </view>
     </view>
+    
+    <!-- 接自己单的特殊提示 -->
+    <view class="own-service-notice" wx:if="{{order.isOwnService}}">
+      <view class="notice-icon">💡</view>
+      <view class="notice-content">
+        <view class="notice-title">您接了自己的服务</view>
+        <view class="notice-desc">这是您发布的服务，您自己接单了</view>
+      </view>
+    </view>
   </view>
 
   <!-- 服务信息 -->

@@ -73,13 +73,8 @@ async function createOrder(serviceId, openid, orderData = {}) {
       }
     }
 
-    // 检查是否是自己发布的服务
-    if (service.userOpenId === openid) {
-      return {
-        success: false,
-        message: '不能接自己的单'
-      }
-    }
+    // 检查是否是自己发布的服务（允许接自己的单，但给出提示）
+    const isOwnService = service.openid === openid
 
     // 获取用户信息
     const userResult = await db.collection('users').where({
@@ -139,11 +134,12 @@ async function createOrder(serviceId, openid, orderData = {}) {
       contactInfo: orderData.contactInfo || service.contactInfo || {},
       location: orderData.location || service.location || {},
       requirements: orderData.requirements || service.requirements || '',
+      isOwnService: isOwnService, // 标记是否是接自己的单
       timeline: [
         {
           status: '待接单',
           time: new Date(),
-          description: '订单已创建，等待接单',
+          description: isOwnService ? '您接了自己的服务订单' : '订单已创建，等待接单',
           operator: 'system'
         }
       ],
@@ -157,14 +153,16 @@ async function createOrder(serviceId, openid, orderData = {}) {
       data: order
     })
 
-    // 发送通知给发布者
-    await sendNotification(service.userId, {
-      type: 'new_order',
-      title: '收到新订单',
-      content: `您的服务"${service.title}"收到了新订单`,
-      orderId: result._id,
-      serviceId: serviceId
-    })
+    // 发送通知给发布者（如果不是接自己的单）
+    if (!isOwnService) {
+      await sendNotification(service.userId, {
+        type: 'new_order',
+        title: '收到新订单',
+        content: `您的服务"${service.title}"收到了新订单`,
+        orderId: result._id,
+        serviceId: serviceId
+      })
+    }
 
     return {
       success: true,

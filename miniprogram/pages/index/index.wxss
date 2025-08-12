@@ -73,6 +73,33 @@
   padding: 30rpx;
 }
 
+/* 支付测试区域 */
+.payment-test-section {
+  margin: 30rpx;
+  background: var(--card-color);
+  border-radius: 16rpx;
+  padding: 30rpx;
+}
+
+.test-actions {
+  display: flex;
+  justify-content: center;
+}
+
+.test-btn {
+  background: linear-gradient(135deg, #4CAF50, #45a049);
+  color: white;
+  border: none;
+  border-radius: 12rpx;
+  padding: 20rpx 40rpx;
+  font-size: 28rpx;
+  font-weight: bold;
+}
+
+.test-btn:active {
+  transform: scale(0.98);
+}
+
 .section-title {
   font-size: 32rpx;
   font-weight: bold;

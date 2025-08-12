@@ -131,6 +131,19 @@
   color: #2C3E50;
   flex: 1;
   margin-right: 20rpx;
+  display: flex;
+  align-items: center;
+  gap: 12rpx;
+}
+
+.own-service-tag {
+  background: rgba(255, 193, 7, 0.2);
+  color: #F39C12;
+  font-size: 20rpx;
+  padding: 4rpx 8rpx;
+  border-radius: 8rpx;
+  border: 1rpx solid rgba(255, 193, 7, 0.3);
+  font-weight: normal;
 }
 
 .order-status {

@@ -201,6 +201,20 @@ Page({
     })
   },
 
+  // 跳转到支付测试页面
+  goToPaymentTest: function() {
+    wx.navigateTo({
+      url: '/pages/payment-test/index'
+    })
+  },
+
+  // 跳转到支付集成示例页面
+  goToPaymentIntegrationDemo: function() {
+    wx.navigateTo({
+      url: '/pages/payment-integration-demo/index'
+    })
+  },
+
   // 下拉刷新
   onPullDownRefresh: function() {
     this.loadServices()

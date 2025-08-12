@@ -78,7 +78,10 @@
     <view class="order-item" wx:for="{{orderList}}" wx:key="_id" bindtap="onOrderTap" data-id="{{item._id}}">
       <!-- 订单头部 -->
       <view class="order-header">
-        <view class="order-title">{{item.service.title}}</view>
+        <view class="order-title">
+          {{item.service.title}}
+          <text class="own-service-tag" wx:if="{{item.isOwnService}}">自己接单</text>
+        </view>
         <view class="order-status status-{{item.statusClass}}">{{item.statusText}}</view>
       </view>
 
